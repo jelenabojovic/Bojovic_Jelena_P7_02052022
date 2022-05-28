@@ -1,13 +1,7 @@
-<script>
-
-</script>
-
 <template>
-
-  
+  <div class="container">
+    <router-view :key="$route.fullPath" />
+  </div>
 </template>
 
-<style>
-
-
-</style>
+<style lang="scss"></style>

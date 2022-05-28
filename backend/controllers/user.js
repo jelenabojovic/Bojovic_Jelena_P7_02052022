@@ -21,6 +21,7 @@ passwordSchema
   .not()
   .spaces();
 
+  /*Signup*/
   exports.signup = (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -84,7 +85,8 @@ passwordSchema
         }
       });
     };
-/* Connexion de l'utilisateur */
+
+/* Login */
 
 exports.login = (req, res, next) => {
     const email = req.body.email;
@@ -140,7 +142,8 @@ exports.login = (req, res, next) => {
         message: error.message
       }));
   };
-  /* Afficher tous les utilisateurs */
+
+  /* Get all users */
   
   exports.getAllUsers = (req, res, next) => {
       models.User.findAll()
@@ -150,7 +153,7 @@ exports.login = (req, res, next) => {
         }));
     };
     
-    /* Afficher un utilisateur */
+    /* Get one user */
     
     exports.getOneUser = (req, res, next) => {
       models.User.findOne({

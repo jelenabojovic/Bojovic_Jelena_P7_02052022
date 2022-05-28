@@ -2,7 +2,6 @@
   <div class="container">
     <Header />
     <main>
-
       <div class="row d-flex justify-content-center">
         <form class="connexion jumbotron">
           <div class="form-floating mt-3">
@@ -95,7 +94,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .form-floating {
   margin-bottom: 10px;
 }

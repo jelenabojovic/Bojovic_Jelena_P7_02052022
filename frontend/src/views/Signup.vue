@@ -2,13 +2,13 @@
   <div class="container">
     <Header />
     <main>
-     <!-- FORMULAIRE INSCRIPTION -->
+     <!-- REGISTRATION FORM -->
       <div class="row d-flex justify-content-center">
         <div class="connexion jumbotron">
           <form>
             <div class="form-group">
-              <!-- Nom -->
-              <label for="lastName">Nom*</label>
+              <!-- Last name -->
+              <label for="lastName">Nom</label>
               <input
                 v-model="dataSignup.lastName"
                 type="text"
@@ -20,9 +20,9 @@
                 minlength="2"
               />
             </div>
-            <!-- Prénom -->
+            <!-- First name -->
             <div class="form-group">
-              <label for="firstName">Prénom*</label>
+              <label for="firstName">Prénom</label>
               <input
                 v-model="dataSignup.firstName"
                 type="text"
@@ -36,19 +36,19 @@
             </div>
               <!-- Email -->
             <div class="form-group">
-              <label for="email">Adresse mail*</label>
+              <label for="email">Adresse mail</label>
               <input
                 v-model="dataSignup.email"
                 type="email"
                 class="form-control"
                 id="email"
-                placeholder="email@example.com"
+                placeholder=""
                 aria-describedby="email"
                 required
               />
             </div>
             
-          <!-- Poste occupé -->
+          <!-- Job position -->
             <div class="form-group">
               <label for="service">Poste occupé</label>
               <input
@@ -57,14 +57,14 @@
                 class="form-control"
                 id="service"
                 aria-describedby="service"
-                placeholder="Commercial"
+                placeholder=""
                 required
               />
             </div>
             
-          <!-- Mot de passe -->
+          <!-- Password -->
             <div class="form-group">
-              <label for="password">Mot de passe*</label>
+              <label for="password">Mot de passe</label>
               <p class="help">(entre 8 et 20 caractères, sans espace et au minimum 1 chiffre, 1 minuscule et 1 majuscule)</p>
               <input
                 v-model="dataSignup.password"
@@ -97,12 +97,12 @@
               </p>
             </div>
             <p id="signupError"></p>
-            <p class="help"> * Champs obligatoires</p>
-            <!-- Envoi formulaire -->
+
+            <!-- Form sending -->
            <button
               @click="signup()"
               :disabled="checkDataSignup()"
-              type="submit"
+              type="button"
               class="col btn btn-secondary mt-5"
             >
               S'inscrire
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     checkDataSignup() {
-      const regexEmail = /[a-z0-9]+@groupomania.com/g;
+      const regexEmail = /^[A-Za-z0-9\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9-]{2,4}$/;
       const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/g;
       const regexAlpha =
         /^[a-zA-Zçñàéèêëïîôüù][a-zA-Zçñàéèêëïîôüù\- '\\.]{1,25}$/g;
@@ -196,9 +196,6 @@ export default {
   .container {
     margin-left: 0px;
   }
-  p.welcome {
-    margin-left: 14px;
-    margin-top: 10px;
-  }
+
 }
 </style>
