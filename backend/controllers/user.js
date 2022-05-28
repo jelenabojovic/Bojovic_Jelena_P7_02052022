@@ -166,5 +166,161 @@ exports.login = (req, res, next) => {
           error
         }));
     };
+
+    /* Password modification */
+
+exports.modifyPassword = (req, res, next) => {
+  const oldPassword = req.body.oldPassword
+  const password = req.body.password
+  models.User.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then((user) => {
+      if (user.dataValues.id !== req.auth.userId) {
+        res.status(403).json({
+          message: "vous n'êtes pas autorisé à modifier ce profil",
+        });
+
+      } else if (password) {
+        bcrypt.compare(oldPassword, user.password)
+          .then(valid => {
+            if (!valid) {
+              return res.status(401).json({
+                message: "Mot de passe incorrect !"
+              });
+            } else {
+
+              if (!passwordSchema.validate(password)) {
+                return res.status(400).json({
+                  message: "Le mot de passe ne doit pas contenir d'espace et doit avoir une longueur entre 8 et 20 caractères contenant au minimum 1 chiffre, 1 minuscule et 1 majuscule !",
+                });
+              } else {
+
+                bcrypt.hash(password, 10)
+                  .then(hash => {
+                    user.update({
+                        password: hash
+                      }, {
+                        where: {
+                          id: req.params.id
+                        }
+                      })
+                      .then(() =>
+                        res.status(200).json({
+                          message: "Mot de passe modifié !",
+                        })
+                      )
+                      .catch((error) => res.status(400).json(error));
+                  })
+              }
+            }
+          })
+          .catch((error) => res.status(500).json({
+            error
+          }));
+      }
+    })
+};
+
+/* User's profile modification */
+
+exports.modifyUser = (req, res, next) => {
+
+  models.User.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then((user) => {
+      if (user.dataValues.id !== req.auth.userId) {
+        res.status(403).json({
+          message: "vous n'êtes pas autorisé à modifier ce profil",
+        });
+      } else {
+        const userObject = {
+          userId: user.id,
+          isAdmin: user.isAdmin,
+          lastName: req.body.lastName,
+          firstName: req.body.firstName,
+          email: req.body.email,
+          service: req.body.service,
+          avatar: user.avatar,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        };
+
+        if (req.file) {
+          if (user.avatar) {
+            console.log(user.avatar);
+            fs.unlink(`images/users/${user.avatar}`, () => {});
+          }
+          userObject.avatar = req.file.filename;
+        }
+
+        user
+          .update(userObject)
+          .then(() =>
+            res.status(200).json({
+              data: {
+                userId: user.id,
+                isAdmin: user.isAdmin,
+                lastName: user.lastName,
+                firstName: user.firstName,
+                email: user.email,
+                service: user.service,
+                avatar: user.avatar,
+                createdAt: user.createdAt,
+              },
+              message: " Profil modifié !",
+            })
+          )
+          .catch((error) => res.status(400).json(error));
+      }
+    })
+    .catch((error) => res.status(500).json({
+      error
+    }));
+};
+
+/* Delete user's profil */
+
+exports.deleteUser = (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const isAdmin = decodedToken.isAdmin;
+  models.User.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then((user) => {
+      if (!isAdmin && user.dataValues.id !== req.auth.userId) {
+        res
+          .status(403)
+          .json({
+            error: "Vous n'êtes pas autorisé à supprimer ce compte !"
+          });
+      } else {
+        models.User.destroy({
+            where: {
+              id: req.params.id
+            }
+          })
+          .then(() =>
+            res.status(200).json({
+              message: "Ce compte a été supprimé !"
+            })
+          )
+          .catch((error) => res.status(400).json({
+            error
+          }));
+      }
+    })
+    .catch((error) => res.status(500).json({
+      error
+    }));
+};
     
         
