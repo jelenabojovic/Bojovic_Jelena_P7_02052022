@@ -1,0 +1,528 @@
+<template>
+  <main>
+    <section class="container card my-5 py-5">
+      <div class="row">
+       <!-- IMAGE -->
+        <article class="col-md-5 d-flex justify-content-center align-items-center">
+          <div>
+            <!-- User info -->
+            <img class="user_avatar rounded-circle mr-2 " alt=" profil avatar"
+            v-if="userData.data.avatar != null"
+            :src="`http://localhost:3000/images/users/${userData.data.avatar}`"/>
+
+             <div
+            v-else
+            class="d-flex imagepageprofil--size justify-content-center m-auto rounded-circle align-items-center principal--color colorwhite p-2">
+             <font-awesome-icon class="fa-3x" icon="user" alt="avatar" />
+            </div>
+            <!-- Modify photo button -->
+            <div>
+            <button
+            type="button"
+            role="button"
+            class="btn btn-dark rounded-pill"
+            data-bs-toggle="collapse"
+            data-bs-target="#editImage"
+            aria-label="Modifier image">
+              Modifier image
+            </button>
+
+            <form
+            class="collapse fade"
+            id="editImage"
+            aria-labelledby="Modification image profil"
+            aria-hidden="true">
+              <label class="input-group-text my-3 mx-2 btn-outline-dark labelimagepost--custom">
+                Choisir image
+                <input
+                id=" avatar"
+                class="form-control form-control-sm ms-3"
+                type="file"
+                name="image"
+                accept=".jpg, .jpeg, .gif, .png" 
+                @change ="onFileSelected" />
+              </label>
+
+              <button type="button" role="button" aria-label="Validation envoi avatar" class="btn btn-outline-dark me-2 rounded-pill"
+              @click.prevent="modifyAvatar()">
+                Valider
+              </button>
+            </form>
+            </div>
+          </div>
+        </article>
+
+        <!-- USER INFO -->
+        <section class="col-md-7 border-start">
+          <div class="card-body">
+          <!-- Last name modification -->
+            <div class="d-flex">
+              <h2 class="h6 text-start mb-0 d-flex align-items-center">
+                <strong>
+                  Nom
+                </strong>
+              </h2>
+
+              <button
+              class="btn rounded-pill p-0 ms-2"
+              type="button"
+              role="button"
+              aria-label="Edit nom"
+              data-bs-toggle="collapse"
+              data-bs-target="#editNom">
+             <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit Nom" />
+              </button>
+            </div>
+
+            <p class="card-text text-start"> {{ userData.data.lastName }} </p>
+            
+            <form
+            class="collapse fade"
+            id="editNom"
+            aria-labelledby="Modification nom"
+            aria-hidden="true">
+
+            <div class="d-flex mb-3">
+            <input
+                class="form-control form-control-sm me-3"
+                type="text"
+                name="nom"
+                v-model="userModified.lastName"
+                aria-label="Champs Nom"
+                pattern="(-?([A-Z].\s)?([A-Z][a-z]+)\s?)+([A-Z]'([A-Z][a-z]+))?"
+                required/>
+
+                <button
+                @click="modifyInfos()"
+                type="submit"
+                role="button"
+                aria-label="Envoi nouveau nom"
+                class="btn btn-outline-dark rounded-pill">
+                  <font-awesome-icon class="fa-sm" icon="check" alt="Modifier nom" />
+                </button>
+              </div>
+            </form>
+
+            <!-- First name modification -->
+            <div class="d-flex">
+              <h3 class="h6 text-start mb-0 d-flex align-items-center">
+                <strong>
+                  Prénom
+                </strong>
+              </h3>
+
+              <button
+              class="btn rounded-pill p-0 ms-2"
+              type="button"
+              role="button"
+              aria-label="Modifier prénom"
+              data-bs-toggle="collapse"
+              data-bs-target="#editPrenom">
+                <font-awesome-icon class="fa-sm text-black-50" icon="edit"  alt="Edit Prénom" />
+              </button>
+            </div>
+
+            <p class="card-text text-start"> {{ userData.data.firstName }}</p>
+
+            <form
+            class="collapse fade"
+            id="editPrenom"
+            aria-labelledby="Modification prénom"
+            aria-hidden="true">
+
+              <div class="d-flex mb-3">
+                <input
+                class="form-control form-control-sm me-3"
+                type="text"
+                name="prenom"
+                aria-label="Champs modification prénom"
+                v-model="userModified.firstName"
+                pattern="[A-Za-zÀ-ÖØ-öø-ÿ-]{2,15}"
+                required />
+                
+                <button
+                 @click="modifyInfos()"
+                type="submit"
+                role="button"
+                aria-label="Modifer prénom envoi"
+                class="btn btn-outline-dark rounded-pill">
+                  <font-awesome-icon  class="fa-sm"  icon="check" alt="Edit prénom" />
+                </button>
+              </div>
+            </form>
+
+            <!-- Email modification -->
+            <div class="d-flex">
+              <h3 class="h6 text-start mb-0 d-flex align-items-center">
+                <strong>
+                  email
+                </strong>
+              </h3>
+
+              <button   
+              class="btn rounded-pill p-0 ms-2"
+              type="button"
+              role="button"
+              aria-label="Afficher modification email"
+              data-bs-toggle="collapse"
+              data-bs-target="#editEmail">
+                <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit email" />
+              </button>
+            </div>
+
+             <p class="card-text text-start"> {{ userData.data.email }} </p>
+
+            <form
+            class="collapse fade"
+            id="editEmail"
+            aria-labelledby="Modification email"
+            aria-hidden="true">
+
+            <div class="d-flex mb-3">
+             <input
+                class="form-control form-control-sm me-3"
+                type="text"
+                name="email"
+                aria-label="Champs modification email"
+                 v-model="userModified.email"
+                 pattern="\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b"
+                required/>
+               
+               <button
+                 @click="modifyInfos()"
+                type="submit"
+                role="button"
+                aria-label="Modifer email envoi"
+                class="btn btn-outline-dark rounded-pill">
+                  <font-awesome-icon class="fa-sm" icon="check" alt="Edit email" />
+                </button>
+              </div>
+            </form>
+
+        <!--Job position modification-->
+          <div class="d-flex">
+              <h3 class="h6 text-start mb-0 d-flex align-items-center">
+                <strong>
+                  Poste occupé chez Groupomania: 
+                </strong>
+              </h3>
+
+              <button  
+              class="btn rounded-pill p-0 ms-2"
+              type="button"
+              role="button"
+              aria-label="Afficher modification poste"
+              data-bs-toggle="collapse"
+              data-bs-target="#editPoste">
+                <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit poste" />
+              </button>
+            </div>
+
+             <p class="card-text text-start"> {{ userData.data.service }}</p>
+
+            <form 
+            class="collapse fade"
+            id="editPoste"
+            aria-labelledby="Modification poste"
+            aria-hidden="true">
+
+              <div class="d-flex mb-3">
+                <input
+                class="form-control form-control-sm me-3"
+                type="text"
+                name="prenom"
+                aria-label="Champs modification email"
+                 v-model="userModified.service"
+               >
+               <button
+                 @click="modifyInfos()"
+                type="submit"
+                role="button"
+                aria-label="Modifer poste envoi"
+                class="btn btn-outline-dark rounded-pill">
+                  <font-awesome-icon class="fa-sm" icon="check" alt="Edit poste" />
+                </button>
+              </div>
+            </form>
+
+            <!-- Password modification -->
+            <div class="d-flex mt-5 mb-3">
+              <button class="btn btn-dark d-flex rounded-pill"
+              @click="passwordForm = !passwordForm"
+              aria-label="Afficher modification mot de passe"
+              data-bs-toggle="collapse"
+              data-bs-target="#editidentifiant">
+                Modifier votre mot de passe
+              </button>
+            </div>
+
+            <!--Password form-->
+              
+        <div v-show="passwordForm" class="passwordForm jumbotron">
+            <form>
+            <div class="form-group mb-0">
+            <label for="oldPassword">Mot de passe actuel :</label>
+           <input
+            type="password"
+            name="oldPassword"
+            id="oldPassword"
+            class="form-control"
+            minlength="8"
+            v-model="oldPassword"
+            required
+          />
+          <p id="passwordError"></p>
+        </div>
+        <div class="form-group mb-0">
+          <label for="newPassword">Nouveau mot de passe :</label>
+          <input
+            type="password"
+            name="newPassword"
+            id="newPassword"
+            class="form-control"
+            minlength="8"
+            v-model="newPassword"
+            required
+            v-on:input="checkDataPassword()"
+          />
+          <p v-if="newPassword == oldPassword" class="errorMsg">
+            Votre nouveau mot de passe ne peut pas être identique à l'ancien !
+          </p>
+          <p id="newPasswordError"></p>
+        </div>
+        <div class="form-group mb-0">
+          <label for="newPasswordConfirm">
+            Confirmer votre nouveau mot de passe :</label >
+          <input
+            type="password"
+            name="newPasswordConfirm"
+            id="newPasswordConfirm"
+            class="form-control"
+            minlength="8"
+            v-model="newPasswordConfirm"
+            required
+            v-on:input="checkDataPassword()"/>
+          <p v-if="newPasswordConfirm != newPassword" class="errorMsg">
+            Merci d'entrer un mot de passe identique !
+          </p>
+        </div>
+        <button class="btn btn-dark d-flex rounded-pill" @click.prevent="changePassword()">
+          Valider
+        </button>
+      </form>
+    </div>
+    </div>
+    </section>
+    </div>
+
+    <button
+      v-if="localstorageIsAdmin === 'true' || userId === localstorageUserId"
+      type="button"
+      role="button"
+      aria-label="Supprimer mon compte"
+      class="btn btn-danger mt-5 w-50 m-auto"
+       @click.prevent="deleteAccount()" >
+        Supprimer votre compte
+      </button>      
+    </section>
+  </main>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+    name: "MyProfile",
+data() {
+    return {
+      userId:"",
+      userModified: {
+        lastName: "",
+        firstName: "",
+        email: "",
+        service: "",
+        localstorageIsAdmin:'',
+        isAdmin: true,
+      },
+      avatarModified: "",
+      passwordForm: false,
+
+      oldPassword: "",
+      newPassword: "",
+      newPasswordConfirm: "",
+
+      userData: {
+        data: {
+          createdAt: "",
+          avatar:""
+        },
+      },
+      user: {
+        userId: "",
+      },
+      userInfos: [],
+    };
+  },
+
+
+  mounted() {
+    this.createUserData();
+    console.log(this.userData);
+  },
+  created() {
+    this.createUserData();
+    this.localstorageIsAdmin = localStorage.isAdmin;
+    this.localstorageUserId = localStorage.userId;
+  },
+
+  methods: {
+    createUserData() {
+      if (localStorage.getItem("user")) {
+        try {
+          this.userData = JSON.parse(localStorage.getItem("user"));
+        } catch (e) {
+          localStorage.removeItem("user");
+          console.log("Données corrompues");
+        }
+      }
+    },
+     onFileSelected(event) {
+      console.log(event);
+      this.avatarModified = event.target.files[0] || event.dataTransfer.files;
+      console.log(this.avatarModified);
+    },
+    modifyAvatar() {
+      const fd = new FormData();
+      fd.append("avatar", this.avatarModified);
+      console.log("test", fd.get("avatar"));
+      axios
+        .put(
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId,
+          fd,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.avatarModified = "";
+          this.createUserData();
+        })
+        .catch((error) => console.log(error));
+    },
+
+    checkDataPassword() {
+      const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/g;
+      if (this.newPassword !== null && regexPassword.test(this.newPassword))
+        return true;
+      else {
+        const errorMsg = document.getElementById("newPasswordError");
+        errorMsg.textContent =
+          "Le mot de passe ne doit pas contenir d'espace et doit avoir une longueur entre 8 et 20 caractères contenant au minimum 1 chiffre, 1 minuscule et 1 majuscule !";
+      }
+    },
+    changePassword() {
+      if (
+        this.oldPassword != this.newPassword &&
+        this.newPassword == this.newPasswordConfirm &&
+        this.oldPassword != "" &&
+        this.newPassword != "" &&
+        this.newPasswordConfirm != ""
+      ) {
+        axios
+          .put(
+            "http://localhost:3000/api/auth/modifyPassword/" +
+              this.userData.data.userId,
+            { oldPassword: this.oldPassword, password: this.newPassword },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            console.log("password change", response);
+            alert("Mot de passe modifié");
+            this.oldPassword = "";
+            this.newPassword = "";
+            this.newPasswordConfirm = "";
+            this.createUserData();
+          })
+          .catch((err) => {
+            console.log(err);
+            const errorMsg = document.getElementById("passwordError");
+            errorMsg.textContent = "Votre mot de passe est incorrect";
+          });
+      }
+    },
+ modifyInfos() {
+      let formData = new FormData();
+      if (
+        this.userModified.lastName ||
+        this.userModified.firstName ||
+        this.userModified.email ||
+        this.userModified.service
+      ) {
+        formData.append("lastName", this.userModified.lastName);
+        formData.append("firstName", this.userModified.firstName);
+        formData.append("email", this.userModified.email);
+        formData.append("service", this.userModified.service);
+      }
+
+      axios
+        .put(
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId,
+          formData,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.userModified.lastName = "";
+          this.userModified.firstName = "";
+          this.userModified.email = "";
+          this.userModified.service = "";
+          alert("Profil modifié !");
+        })
+        .catch((error) => console.log(error));
+    },
+
+    deleteAccount() {
+      if (window.confirm("Etes-vous sûr de vouloir supprimer votre compte ?")) {
+        axios
+          .delete(
+            "http://localhost:3000/api/auth/" + this.userData.data.userId,
+            {
+              headers: {
+                authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then(() => {
+            localStorage.removeItem("user");
+            this.$router.push("/signup");
+          })
+          .catch((error) => console.log(error));
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.user_avatar {
+  width:150px;
+  height:150px;
+  margin-bottom: 15px;
+
+}
+</style>
+
+            
+            
+              
