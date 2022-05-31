@@ -17,4 +17,4 @@ const storageUsers = multer.diskStorage({
     },
   });
 
-  exports.users = multer({ storage: storageUsers }).single("image");
+  exports.users = multer({ storage: storageUsers }).single("avatar");

@@ -7,8 +7,8 @@ const Sequelize = require("sequelize");
 // Express
 const app = express();
 
-// Routes
-//const userRoutes = require("./routes/user");
+ //Routes
+const userRoutes = require("./routes/user");
 //const postRoutes = require("./routes/post");
 //const commentRoutes = require("./routes/comment");
 
@@ -40,9 +40,9 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 
-// Middleware
-//app.use("/images", express.static(path.join(__dirname, "images")));
-//app.use("/api/auth", userRoutes);
+ //Middleware
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/api/auth", userRoutes);
 //app.use("/api/post", postRoutes);
 //app.use("/api/comment", commentRoutes);
 
