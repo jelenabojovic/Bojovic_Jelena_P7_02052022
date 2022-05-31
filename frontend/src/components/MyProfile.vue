@@ -10,10 +10,13 @@
             v-if="userData.data.avatar != null"
             :src="`http://localhost:3000/images/users/${userData.data.avatar}`"/>
 
-             <div
+            <div
             v-else
             class="d-flex imagepageprofil--size justify-content-center m-auto rounded-circle align-items-center principal--color colorwhite p-2">
-             <font-awesome-icon class="fa-3x" icon="user" alt="avatar" />
+              <font-awesome-icon
+              class="fa-3x"
+              icon="user"
+              alt="Image Profil pictogramme" />
             </div>
             <!-- Modify photo button -->
             <div>
@@ -44,7 +47,7 @@
               </label>
 
               <button type="button" role="button" aria-label="Validation envoi avatar" class="btn btn-outline-dark me-2 rounded-pill"
-              @click.prevent="modifyAvatar()">
+              @click.prevent="modifyAvatar(), reload()">
                 Valider
               </button>
             </form>
@@ -412,6 +415,10 @@ data() {
         })
         .catch((error) => console.log(error));
     },
+    
+    reload() {
+        setTimeout("window.open(self.location, '_self');", 2000);
+      },
 
     checkDataPassword() {
       const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/g;

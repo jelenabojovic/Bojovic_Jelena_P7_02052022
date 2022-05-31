@@ -14,7 +14,7 @@
       </li>
 
       <li class="nav-item  mt-3 px-4 ">
-        <router-link to ="/feed">
+        <router-link to ="/wall">
           <font-awesome-icon icon="house" aria-label="Fil d'actualité" title="Fil d'actualité"/>
     </router-link>
     </li>

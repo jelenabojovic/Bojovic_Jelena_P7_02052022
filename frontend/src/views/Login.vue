@@ -81,7 +81,7 @@ export default {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user", JSON.stringify(response));
           console.log(response);
-          this.$router.push("/Feed");
+          this.$router.push("/Wall");
         })
         .catch((error) => {
           console.log(error);
