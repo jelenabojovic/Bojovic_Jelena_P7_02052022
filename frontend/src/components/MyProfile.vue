@@ -2,21 +2,14 @@
   <main>
     <section class="container card my-5 py-5">
       <div class="row">
-       <!-- IMAGE -->
         <article class="col-md-5 d-flex justify-content-center align-items-center">
           <div>
-            <!-- User info -->
+            <!-- User avatar -->
             <img class="user_avatar rounded-circle mr-2 " alt=" profil avatar"
             v-if="userData.data.avatar != null"
             :src="`http://localhost:3000/images/users/${userData.data.avatar}`"/>
-
-            <div
-            v-else
-            class="d-flex imagepageprofil--size justify-content-center m-auto rounded-circle align-items-center principal--color colorwhite p-2">
-              <font-awesome-icon
-              class="fa-3x"
-              icon="user"
-              alt="Image Profil pictogramme" />
+            <div v-else>
+              <img class="user_avatar rounded-circle mr-2" src="../assets/avatar.png"  />
             </div>
             <!-- Modify photo button -->
             <div>
@@ -61,9 +54,7 @@
           <!-- Last name modification -->
             <div class="d-flex">
               <h2 class="h6 text-start mb-0 d-flex align-items-center">
-                <strong>
-                  Nom
-                </strong>
+                <strong> Nom </strong>
               </h2>
 
               <button
@@ -71,8 +62,7 @@
               type="button"
               role="button"
               aria-label="Edit nom"
-              data-bs-toggle="collapse"
-              data-bs-target="#editNom">
+              @click="inputLastNameHidden=!inputLastNameHidden">
              <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit Nom" />
               </button>
             </div>
@@ -80,13 +70,11 @@
             <p class="card-text text-start"> {{ userData.data.lastName }} </p>
             
             <form
-            class="collapse fade"
             id="editNom"
-            aria-labelledby="Modification nom"
-            aria-hidden="true">
+            aria-labelledby="Modification nom" >
 
-            <div class="d-flex mb-3">
-            <input
+            <div class="d-flex mb-3" v-if="inputLastNameHidden==false">
+              <input
                 class="form-control form-control-sm me-3"
                 type="text"
                 name="nom"
@@ -96,22 +84,20 @@
                 required/>
 
                 <button
-                @click="modifyInfos()"
-                type="submit"
+                @click="modifyLastName()"
+                type="button"
                 role="button"
                 aria-label="Envoi nouveau nom"
                 class="btn btn-outline-dark rounded-pill">
                   <font-awesome-icon class="fa-sm" icon="check" alt="Modifier nom" />
                 </button>
               </div>
-            </form>
+             </form>
 
             <!-- First name modification -->
             <div class="d-flex">
               <h3 class="h6 text-start mb-0 d-flex align-items-center">
-                <strong>
-                  Prénom
-                </strong>
+                <strong> Prénom </strong>
               </h3>
 
               <button
@@ -119,21 +105,18 @@
               type="button"
               role="button"
               aria-label="Modifier prénom"
-              data-bs-toggle="collapse"
-              data-bs-target="#editPrenom">
-                <font-awesome-icon class="fa-sm text-black-50" icon="edit"  alt="Edit Prénom" />
+              @click="inputFirstNameHidden=!inputFirstNameHidden">
+              <font-awesome-icon class="fa-sm text-black-50" icon="edit"  alt="Edit Prénom" />
               </button>
             </div>
 
             <p class="card-text text-start"> {{ userData.data.firstName }}</p>
 
             <form
-            class="collapse fade"
             id="editPrenom"
-            aria-labelledby="Modification prénom"
-            aria-hidden="true">
+            aria-labelledby="Modification prénom">
 
-              <div class="d-flex mb-3">
+              <div class="d-flex mb-3" v-if="inputFirstNameHidden==false">
                 <input
                 class="form-control form-control-sm me-3"
                 type="text"
@@ -144,8 +127,8 @@
                 required />
                 
                 <button
-                 @click="modifyInfos()"
-                type="submit"
+                 @click="modifyFirstName()"
+                type="button"
                 role="button"
                 aria-label="Modifer prénom envoi"
                 class="btn btn-outline-dark rounded-pill">
@@ -157,9 +140,7 @@
             <!-- Email modification -->
             <div class="d-flex">
               <h3 class="h6 text-start mb-0 d-flex align-items-center">
-                <strong>
-                  email
-                </strong>
+                <strong> Email </strong>
               </h3>
 
               <button   
@@ -167,8 +148,7 @@
               type="button"
               role="button"
               aria-label="Afficher modification email"
-              data-bs-toggle="collapse"
-              data-bs-target="#editEmail">
+               @click="inputEmailHidden=!inputEmailHidden">
                 <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit email" />
               </button>
             </div>
@@ -176,12 +156,10 @@
              <p class="card-text text-start"> {{ userData.data.email }} </p>
 
             <form
-            class="collapse fade"
             id="editEmail"
-            aria-labelledby="Modification email"
-            aria-hidden="true">
+            aria-labelledby="Modification email">
 
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-3" v-if="inputEmailHidden==false">
              <input
                 class="form-control form-control-sm me-3"
                 type="text"
@@ -192,7 +170,7 @@
                 required/>
                
                <button
-                 @click="modifyInfos()"
+                 @click="modifyEmail()"
                 type="submit"
                 role="button"
                 aria-label="Modifer email envoi"
@@ -205,9 +183,7 @@
         <!--Job position modification-->
           <div class="d-flex">
               <h3 class="h6 text-start mb-0 d-flex align-items-center">
-                <strong>
-                  Poste occupé chez Groupomania: 
-                </strong>
+                <strong> Poste occupé chez Groupomania: </strong>
               </h3>
 
               <button  
@@ -215,8 +191,7 @@
               type="button"
               role="button"
               aria-label="Afficher modification poste"
-              data-bs-toggle="collapse"
-              data-bs-target="#editPoste">
+              @click="inputServiceHidden=!inputServiceHidden">
                 <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit poste" />
               </button>
             </div>
@@ -224,12 +199,10 @@
              <p class="card-text text-start"> {{ userData.data.service }}</p>
 
             <form 
-            class="collapse fade"
             id="editPoste"
-            aria-labelledby="Modification poste"
-            aria-hidden="true">
+            aria-labelledby="Modification poste">
 
-              <div class="d-flex mb-3">
+              <div class="d-flex mb-3" v-if="inputServiceHidden==false">
                 <input
                 class="form-control form-control-sm me-3"
                 type="text"
@@ -238,8 +211,8 @@
                  v-model="userModified.service"
                >
                <button
-                 @click="modifyInfos()"
-                type="submit"
+                 @click="modifyService ()"
+                type="button"
                 role="button"
                 aria-label="Modifer poste envoi"
                 class="btn btn-outline-dark rounded-pill">
@@ -338,7 +311,6 @@ export default {
     name: "MyProfile",
 data() {
     return {
-      userId:"",
       userModified: {
         lastName: "",
         firstName: "",
@@ -354,16 +326,19 @@ data() {
       newPassword: "",
       newPasswordConfirm: "",
 
+      inputLastNameHidden:true,
+      inputFirstNameHidden:true,
+      inputEmailHidden:true,
+      inputServiceHidden:true,
+
       userData: {
         data: {
-          createdAt: "",
           avatar:""
         },
       },
       user: {
         userId: "",
       },
-      userInfos: [],
     };
   },
 
@@ -389,7 +364,7 @@ data() {
         }
       }
     },
-     onFileSelected(event) {
+    onFileSelected(event) {
       console.log(event);
       this.avatarModified = event.target.files[0] || event.dataTransfer.files;
       console.log(this.avatarModified);
@@ -400,8 +375,7 @@ data() {
       console.log("test", fd.get("avatar"));
       axios
         .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId,
-          fd,
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -464,24 +438,12 @@ data() {
           });
       }
     },
- modifyInfos() {
-      let formData = new FormData();
-      if (
-        this.userModified.lastName ||
-        this.userModified.firstName ||
-        this.userModified.email ||
-        this.userModified.service
-      ) {
-        formData.append("lastName", this.userModified.lastName);
-        formData.append("firstName", this.userModified.firstName);
-        formData.append("email", this.userModified.email);
-        formData.append("service", this.userModified.service);
-      }
-
+    modifyLastName () {
+      const fd = new FormData();
+      fd.append("lastName", this.userModified.lastName);
       axios
         .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId,
-          formData,
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -491,14 +453,75 @@ data() {
         .then((response) => {
           localStorage.setItem("user", JSON.stringify(response.data));
           this.userModified.lastName = "";
-          this.userModified.firstName = "";
-          this.userModified.email = "";
-          this.userModified.service = "";
-          alert("Profil modifié !");
+          alert("Nom modifié !");
+          this.inputLastNameHidden=true;
+          this.createUserData();
         })
         .catch((error) => console.log(error));
     },
-
+    modifyFirstName () {
+      const fd = new FormData();
+      fd.append("firstName", this.userModified.firstName);
+      axios
+        .put(
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.userModified.firstName = "";
+          alert("Prénom modifié !");
+          this.inputFirstNameHidden=true;
+          this.createUserData();
+        })
+        .catch((error) => console.log(error));
+    },
+    modifyEmail () {
+      const fd = new FormData();
+      fd.append("email", this.userModified.email);
+      axios
+        .put(
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.userModified.email = "";
+          alert("Email modifié !");
+          this.inputEmailHidden=true;
+          this.createUserData();
+        })
+        .catch((error) => console.log(error));
+    },
+    modifyService () {
+     const fd = new FormData();
+      fd.append("service", this.userModified.service);
+      axios
+        .put(
+          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("user", JSON.stringify(response.data));
+          this.userModified.service = "";
+          alert("Service modifié !");
+          this.inputServiceHidden=true;
+          this.createUserData();
+        })
+        .catch((error) => console.log(error));
+    },
     deleteAccount() {
       if (window.confirm("Etes-vous sûr de vouloir supprimer votre compte ?")) {
         axios
@@ -526,7 +549,6 @@ data() {
   width:150px;
   height:150px;
   margin-bottom: 15px;
-
 }
 </style>
 

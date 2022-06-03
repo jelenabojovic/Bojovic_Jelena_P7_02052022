@@ -24,30 +24,27 @@
                src="../assets/avatar.png" />
              </div>
 
-                <div class="text-start ps-2" aria-label="nom prénom de l'utilisateur">
+              <div class="text-start ps-2" aria-label="nom prénom de l'utilisateur">
                   <p class="card-text my-0">
                     {{ post.User.lastName }} {{ post.User.firstName }}
                   </p>
 
-                  <p class="card-text">
-                    <small class="text-muted">
-                       publié le
-            {{
-              post.createdAt.split("T")[0].split("-").reverse().join("/") +
-              " à " +
-              post.createdAt.split("T")[1].split(":").slice(0, -1).join(":")
-            }}
-                    </small>
-                  </p>
-                </div>
+                  <p class="card-text text-muted"> publié le
+                  {{
+                    post.createdAt.split("T")[0].split("-").reverse().join("/") +
+                   " à " +
+                   post.createdAt.split("T")[1].split(":").slice(0, -1).join(":")
+                  }}
+                 </p>
+              </div>
             </router-link>
 
 
-              <!-- Bouton supprimer posts -->
+              <!-- Button delete posts -->
             <div>
               <button
               v-if=" userData.data.userId == post.User_id || userData.data.isAdmin == true"
-              type="submit"
+              type="button"
               role="button"
               aria-label="Supprimer post"
               class="btn"

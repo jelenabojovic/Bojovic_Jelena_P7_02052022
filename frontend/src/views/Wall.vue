@@ -1,7 +1,7 @@
 <template>
  <div class="container"> 
    <WallHeader/>
-   <CreatePost @postCreated="test"/>
+   <CreatePost @postCreated="postCreated"/>
    <Posts ref="monWall"/>
 
 
@@ -26,7 +26,7 @@ export default {
 
   methods: {
     test () {
-      alert ("ok")
+      alert ("Votre publication sera publié")
       const Wall =this.$refs.monWall
       Wall.getAllPosts ();
 
