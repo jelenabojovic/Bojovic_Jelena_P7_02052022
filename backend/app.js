@@ -11,7 +11,7 @@ const app = express();
  //Routes
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
-//const commentRoutes = require("./routes/comment");
+const commentRoutes = require("./routes/comment");
 
 // Connexion BDD
 const sequelize = new Sequelize("groupomania", "root", "**JB!fr!2022", {
@@ -33,6 +33,6 @@ app.use(cors());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
-//app.use("/api/comment", commentRoutes);
+app.use("/api/comment", commentRoutes);
 
 module.exports = app;

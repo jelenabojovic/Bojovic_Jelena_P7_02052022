@@ -78,7 +78,7 @@ exports.modifyPost = (req, res, next) => {
     }));
 };
 
-/*Display of all posts */
+/*Display all posts */
 
 exports.getAllPosts = (req, res, next) => {
     console.log ("get all posts")
@@ -91,14 +91,14 @@ exports.getAllPosts = (req, res, next) => {
               model: models.User,
               attributes: ["lastName", "firstName", "avatar"],
             },
-           // {
-             // model: models.Comment,
-             // attributes: ["id", "User_id", "content", "createdAt", "UpdatedAt"],
-             // include: [{
-              // model: models.User,
-              //  attributes: ["lastName", "firstName", "avatar"],
-             // }, ],
-           // },
+           {
+              model: models.Comment,
+              attributes: ["id", "User_id", "content", "createdAt", "UpdatedAt"],
+              include: [{
+               model: models.User,
+               attributes: ["lastName", "firstName", "avatar"],
+              }, ],
+           },
           ],
         })
         .then((posts) => res.status(200).json(posts))
@@ -107,7 +107,7 @@ exports.getAllPosts = (req, res, next) => {
         });
     };
 
-     /* Display of one post */
+     /* Display  one post */
 
 exports.getOnePost = (req, res, next) => {
     models.Post.findOne({
@@ -119,14 +119,14 @@ exports.getOnePost = (req, res, next) => {
             model: models.User,
             attributes: ["lastName", "firstName", "avatar"],
           },
-          //{
-           // model: models.Comment,
-           // attributes: ["id", "User_id", "content", "createdAt", "updatedAt"],
-           // include: [{
-            //  model: models.User,
-            //  attributes: ["lastName", "firstName", "avatar"],
-           // }, ],
-         // },
+          {
+            model: models.Comment,
+            attributes: ["id", "User_id", "content", "createdAt", "updatedAt"],
+            include: [{
+              model: models.User,
+              attributes: ["lastName", "firstName", "avatar"],
+            }, ],
+          },
         ],
       })
   

@@ -9,7 +9,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between"> 
 
-            <router-link class="text-dark" to="/profile">
+            <div class="text-dark">
               <!-- User info -->
               <div class="d-flex align-items-center" >
                 <img
@@ -37,7 +37,7 @@
                   }}
                  </p>
               </div>
-            </router-link>
+            </div>
 
 
               <!-- Button delete posts -->
@@ -48,41 +48,31 @@
               role="button"
               aria-label="Supprimer post"
               class="btn"
-               @click="deletePost(post.id)"
-              >
-
-             <font-awesome-icon
-                class="fa"
-                icon="trash-alt"
-                alt="Supprimer post" />
+               @click="deletePost(post.id)" >
+              <font-awesome-icon class="fa" icon="trash-alt" alt="Supprimer post" />
               </button>
 
               <!-- Button modify post -->
               <button
                v-if=" userData.data.userId == post.User_id "
-              type="submit"
+              type="button"
               role="button"
               class="btn"
               aria-label="Modifier post"
               data-bs-toggle="modal"
-              :data-bs-target="`#exampleModal${index}`"
-              >
-                  <font-awesome-icon
-                  class="fa"
-                  icon="edit"
-                  alt="Édit post" />
+              :data-bs-target="`#exampleModal${index}`">
+              <font-awesome-icon class="fa" icon="edit" alt="Édit post" />
               </button>
             </div>
 
           </div>
           <p class="card-text text-start mt-4">
-             <p v-if="post.content">{{ post.content }}</p>
-        
+            <p v-if="post.content">{{ post.content }}</p>
           </p>
         </div>
         <img
         v-if="post.image != null"
-          :src="`http://localhost:3000/images/posts/${post.image}`"
+        :src="`http://localhost:3000/images/posts/${post.image}`"
         class="card-img-bottom principal--color"
         alt="" />
         
@@ -165,6 +155,11 @@
         </div>
 
         <!-- Comments -->
+        <Comments
+        aria-label="les commentaires"
+        :postId="post.id"
+        :post="post"
+        @reloadPosts="getAllPosts" />
 
       </article>
     </section>
@@ -173,9 +168,13 @@
 
 <script>
 import axios from "axios";
+import Comments from "../components/Comments.vue";
 
 export default {
     name: "Posts",
+    components: {
+      Comments
+    },
     data() {
     return {
       userData: { data: {} },
@@ -188,7 +187,7 @@ export default {
     
       allPosts: [],
       postModified: {},
-        msgError: "",
+      msgError: "",
     };
 },
 mounted() {
@@ -273,11 +272,8 @@ mounted() {
 
 <style scoped>
 .imageprofil {
-
-	object-fit: cover;
-	height: 40px;
-  width: 40px;
-  }
-  
-
+object-fit: cover;
+height: 40px;
+width: 40px;
+}
 </style>

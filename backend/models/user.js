@@ -16,11 +16,18 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
       });
       models.Post.belongsTo(models.User, { foreignKey: "User_id" });
+
+      models.User.hasMany(models.Comment, {
+        foreignKey: "User_id",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      models.Comment.belongsTo(models.User, { foreignKey: "User_id" });
     }
   }
   User.init(
     {
-    firstName: { type: DataTypes.STRING, allowNull: false },
+      firstName: { type: DataTypes.STRING, allowNull: false },
       lastName: { type: DataTypes.STRING, allowNull: false },
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
       password: { type: DataTypes.STRING, allowNull: false },
