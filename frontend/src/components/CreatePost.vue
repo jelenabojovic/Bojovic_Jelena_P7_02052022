@@ -1,6 +1,6 @@
 <template>
 <!-- User photo -->
-<p> <strong>Bonjour </strong> {{ userData.data.firstName }} </p>
+<p class="greeting"> <strong>Bonjour </strong> {{ userData.data.firstName }} </p>
   <div class="post-user d-flex align-items-baseline">
       <div>
           <img
@@ -13,8 +13,7 @@
             class="post_user_avatar rounded-circle mr-2"
             alt="Photo de profil par défaut"
             v-else
-            src="../assets/avatar.png"
-          />
+            src="../assets/avatar.png" />
       </div>
     </div>
         <!---- Creation of posts-->
@@ -27,8 +26,7 @@
           rows="5"
           v-model="post.content"
           class="form-control form-control-sm"
-          placeholder="Quoi de neuf ?"
-        />
+          placeholder="Quoi de neuf ?"/>
       </div>
 
       <div class="form-group">
@@ -39,8 +37,7 @@
           class="form-control"
           id="image"
           accept="image/png, image/jpeg, image/jpg, image/gif"
-          @change="onFileSelected"
-        />
+          @change="onFileSelected" />
       </div>
       <div class="d-flex justify-content-end">
         <button
@@ -49,8 +46,7 @@
           type="button"
           aria-label="Publier post"
           title="Publier post"
-          @click.prevent="createPost"
-        >
+          @click.prevent="createPost" >
           <font-awesome-icon icon="paper-plane" />
         </button>
       </div>
@@ -150,4 +146,10 @@ export default {
   height: 50px;
   object-fit: cover;
 }
+
+@media screen and (max-width: 768px) {
+  .greeting {
+    margin-top: 5px;
+  }
+}  
 </style>

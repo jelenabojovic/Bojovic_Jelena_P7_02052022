@@ -25,7 +25,7 @@ export default {
   },
 
   methods: {
-    test () {
+    postCreated () {
       alert ("Votre publication sera publié")
       const Wall =this.$refs.monWall
       Wall.getAllPosts ();

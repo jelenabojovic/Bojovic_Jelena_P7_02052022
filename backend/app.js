@@ -13,7 +13,7 @@ const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
 
-// Connexion BDD
+// Connection to database MySQL
 const sequelize = new Sequelize("groupomania", "root", "**JB!fr!2022", {
   host: "localhost",
   dialect: "mysql",

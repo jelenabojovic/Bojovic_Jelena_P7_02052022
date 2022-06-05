@@ -223,7 +223,7 @@
 
             <!-- Password modification -->
             <div class="d-flex mt-5 mb-3">
-              <button class="btn btn-dark d-flex rounded-pill"
+              <button class="btn btn-dark d-flex rounded-pill password"
               @click="passwordForm = !passwordForm"
               aria-label="Afficher modification mot de passe"
               data-bs-toggle="collapse"
@@ -296,7 +296,7 @@
       type="button"
       role="button"
       aria-label="Supprimer mon compte"
-      class="btn btn-danger mt-5 w-50 m-auto"
+      class="btn btn-danger mt-5 w-50 m-auto rounded-pill"
        @click.prevent="deleteAccount()" >
         Supprimer votre compte
       </button>      
@@ -549,6 +549,11 @@ data() {
   width:150px;
   height:150px;
   margin-bottom: 15px;
+}
+@media screen and (max-width: 768px) {
+  .password {
+    margin-left: 30px;
+  }
 }
 </style>
 

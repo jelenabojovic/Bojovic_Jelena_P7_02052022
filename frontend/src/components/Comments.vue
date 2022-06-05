@@ -32,17 +32,12 @@
         alt="Commenter" />
         Commenter
       </button>
-      
-
     </section>
 
     <!-- Show comments -->
-    <div
-    v-for="(comment, index) in post.Comments"
+    <div v-for="(comment, index) in post.Comments"
     v-bind:key="comment.id">
-
-      <section
-      class="collapse"
+      <section class="collapse"
       :id="`afficheCommentaires${postId}`">
         <div class="m-3 rounded-3 shadow-sm pe-1">
           <div class="d-flex justify-content-between">
@@ -59,44 +54,39 @@
                 class="rounded-circle imageprofil "
                 alt="Photo de profil par défaut"
                 v-else
-                src="../assets/icon.png"
-              />
+                src="../assets/icon.png"/>
               </div>
-              </div>
+            </div>
               
-              <span class="text-start ps-2">
+            <span class="text-start ps-2">
                 {{ comment.User.lastName }} {{ comment.User.firstName }}
-              </span>
+            </span>
               <p class="comment_createdAt font-italic">
-            le
-            {{
+              le
+              {{
               comment.createdAt.split("T")[0].split("-").reverse().join("/") +
               " à " +
               comment.createdAt.split("T")[1].split(":").slice(0, -1).join(":")
-            }}
-          </p>
+              }}
+            </p>
 
             <!-- Edit/delete comments button -->
             <div>
               <button
-              v-if="
-                userData.data.userId == comment.User_id ||
-                userData.data.isAdmin == true
-              "
-              type="submit"
+              v-if=" userData.data.userId == comment.User_id || userData.data.isAdmin == true "
+              type="button"
               role="button"
               aria-label="Supprimer commentaire"
               class="btn text-secondary"
-              @click.prevent="deleteComment(comment.id), reload()">
+              @click.prevent="deleteComment(comment.id)">
                 <font-awesome-icon
                 class="fa-sm"
                 icon="trash-alt"
                 alt="Supprimer commentaire" />
               </button>
 
-              <button
-              v-if="userData.data.userId == comment.User_id "
-              type="submit"
+              <button v-if="userData.data.userId == comment.User_id "
+              type="button"
               role="button"
               aria-label="Éditer commentaire"
               class="btn text-secondary"
@@ -108,7 +98,6 @@
                   alt="Modifier commentaire" />
               </button>
             </div>
-          
           </div>
           <!-- Post content -->
           <p class="text-start pb-2 ms-4"> {{ comment.content }}</p> 
@@ -118,7 +107,7 @@
 
     <!-- If there is no comments -->
     <p
-    :id="`afficheCommentaires${postId}`"
+     :id="`afficheCommentaires${postId}`"
     v-if="!post.Comments.length" 
     class="collapse m-3">
       Aucun commentaire
@@ -151,9 +140,6 @@
 
           
           <div class="modal-body py-5">
-            <div class="d-flex align-items-center pb-2">
-              
-            </div>
             <textarea
             class="form-control"
             id="message-text-commentaire"
@@ -215,8 +201,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5
-            class="modal-title"
+            <h5 class="modal-title"
             id="TitreLabelModifierCommentaire">
             Modifiez mon commentaire
             </h5>
@@ -276,11 +261,9 @@
             Enregistrer
             </button>
           </div>
-
         </div>
       </div>
     </div>
-
   </article>
 </template>
 
@@ -309,8 +292,6 @@ export default {
       },
         commentModified: {},
         displayComments: false,
-        
-        
       }
       },
 
@@ -417,6 +398,5 @@ object-fit: cover;
 height: 40px;
 width: 40px;
 }
-
 </style>
 

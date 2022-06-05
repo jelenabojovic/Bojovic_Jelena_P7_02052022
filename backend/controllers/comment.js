@@ -2,7 +2,7 @@ const models = require("../models");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 
-/* Crate a comment */
+/* Create a comment */
 
 exports.createComment = (req, res, next) => {
     const commentObject = {

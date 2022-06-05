@@ -12,6 +12,7 @@ export default {
 
 <style scoped>
 .copyright {
+  margin-top: 20px;
   margin-right: auto;
   margin-left: auto;
 }
