@@ -20,7 +20,7 @@
                 minlength="2"
               />
             </div>
-            <!-- First name -->
+              <!-- First name -->
             <div class="form-group">
               <label for="firstName">Prénom</label>
               <input
@@ -48,7 +48,7 @@
               />
             </div>
             
-          <!-- Job position -->
+              <!-- Job position -->
             <div class="form-group">
               <label for="service">Poste occupé</label>
               <input
@@ -62,7 +62,7 @@
               />
             </div>
             
-          <!-- Password -->
+                <!-- Password -->
             <div class="form-group">
               <label for="password">Mot de passe</label>
               <p class="help">(entre 8 et 20 caractères, sans espace et au minimum 1 chiffre, 1 minuscule et 1 majuscule)</p>
@@ -143,7 +143,7 @@ export default {
       const regexAlpha =
         /^[a-zA-Zçñàéèêëïîôüù][a-zA-Zçñàéèêëïîôüù\- '\\.]{1,25}$/g;
       if (
-        this.dataSignup.email !== null &&
+          this.dataSignup.email !== null &&
           this.dataSignup.lastName !== null &&
           this.dataSignup.firstName !== null &&
           this.dataSignup.service !== null &&
@@ -154,7 +154,6 @@ export default {
         regexAlpha.test(this.dataSignup.firstName)
       )
         return true;
-
     },
 
     signup() {
@@ -196,6 +195,5 @@ export default {
   .container {
     margin-left: 0px;
   }
-
 }
 </style>

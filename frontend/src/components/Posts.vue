@@ -1,7 +1,7 @@
 <template>
   <main  class="container-fluid form-custom-color-white pt-5">     
     <section class="mx-lg-5 pb-4" >
-     <!-- LE FIL D'ACTUALITÉS DES POSTS -->
+     <!-- Posts feed -->
       <article
       v-for="(post, index) in allPosts"
       v-bind:key="post.id"
@@ -138,7 +138,7 @@
                   Annuler
                 </button>
 
-                <!-- Boutons envoi post -->
+                <!-- Post sending button -->
                 <button
                 v-if="postModified.content !== '' || postModified.image !== ''"
                  @click.prevent="editPost(post.id), reload()"
@@ -187,7 +187,6 @@ export default {
     
       allPosts: [],
       postModified: {},
-      msgError: "",
     };
 },
 mounted() {

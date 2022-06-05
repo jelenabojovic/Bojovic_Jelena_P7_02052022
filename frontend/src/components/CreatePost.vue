@@ -1,8 +1,8 @@
 <template>
 <!-- User photo -->
 <p> <strong>Bonjour </strong> {{ userData.data.firstName }} </p>
-<div class="post-user d-flex align-items-baseline">
-        <div>
+  <div class="post-user d-flex align-items-baseline">
+      <div>
           <img
             class="post_user_avatar rounded-circle mr-2"
             v-if="userData.data.avatar != null"
@@ -15,8 +15,8 @@
             v-else
             src="../assets/avatar.png"
           />
-        </div>
-        </div>
+      </div>
+    </div>
         <!---- Creation of posts-->
   <div class="createPost jumbotron pb-0">
     <form>
@@ -78,7 +78,6 @@ export default {
         image: "",
       },
       msgError: "",
-      msgWelcome: "",
     };
   },
  mounted() {

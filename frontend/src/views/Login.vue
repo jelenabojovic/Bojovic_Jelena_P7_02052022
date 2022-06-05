@@ -119,8 +119,7 @@ form {
   .connexion {
     width: 100%;
   }
-  .btn-secondary,
-  .btn-primary {
+  .btn-secondary {
     width: 100%;
   }
 }

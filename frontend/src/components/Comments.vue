@@ -1,8 +1,7 @@
-<template>
-  <!-- LES BOUTONS COMMENTAIRES/COMMENTER-->
+<template>  
   <article>
     <section class="gap-3 mb-3 mt-3">
-      <!-- Bouton commentaires -->
+      <!-- Show comments button -->
       <button
       type="button"
       role="button"
@@ -19,7 +18,7 @@
         Commentaires
       </button>
 
-      <!-- Bouton commenter -->
+      <!-- Write comment button -->
       <button
       type="button"
       role="button"
@@ -37,7 +36,7 @@
 
     </section>
 
-    <!-- AFFICHER LES COMMENTAIRES -->
+    <!-- Show comments -->
     <div
     v-for="(comment, index) in post.Comments"
     v-bind:key="comment.id">
@@ -48,7 +47,7 @@
         <div class="m-3 rounded-3 shadow-sm pe-1">
           <div class="d-flex justify-content-between">
 
-            <!-- Descriptif utilisateur (image, nom/prénom -->
+            <!-- Info of person who wrote comments -->
             <div  class="d-flex align-items-center accordion-body">
               <div>
               <img
@@ -77,7 +76,7 @@
             }}
           </p>
 
-            <!-- Boutons supprimer/éditer commentaires -->
+            <!-- Edit/delete comments button -->
             <div>
               <button
               v-if="
@@ -111,13 +110,13 @@
             </div>
           
           </div>
-          <!-- Contenus -->
+          <!-- Post content -->
           <p class="text-start pb-2 ms-4"> {{ comment.content }}</p> 
         </div>
       </section>
     </div>
 
-    <!-- Si aucun commentaire -->
+    <!-- If there is no comments -->
     <p
     :id="`afficheCommentaires${postId}`"
     v-if="!post.Comments.length" 
@@ -125,7 +124,7 @@
       Aucun commentaire
     </p>
   
- <!-- ÉCRIRE UN COMMENTAIRE -->
+ <!-- Writing a comment -->
     <section
     class="modal fade"
     :id="`ModalCommentaire${postId}`"
@@ -150,7 +149,7 @@
             </button>
           </div>
 
-          <!-- Écrire son commentaire -->
+          
           <div class="modal-body py-5">
             <div class="d-flex align-items-center pb-2">
               
@@ -173,7 +172,7 @@
             Fermer
             </button>
 
-            <!-- Bouton envoyer nouveau commentaire -->
+            <!-- Send new comment button -->
             <button
             v-if="comment.content !== ''"
             type="button"
@@ -203,7 +202,7 @@
       </section>
     </section>
 
-    <!-- MODIFIER COMMENTAIRE -->
+    <!-- Modify comments -->
     <div
     v-for="(comment, index) in post.Comments"
     v-bind:key="comment.id"
@@ -230,7 +229,7 @@
             </button>
           </div>
 
-        <!-- Boîte modifier mon commentaire -->
+        
           <div class="modal-body">
             <form enctype="multipart/form-data">
               <div class="mb-3">
@@ -250,7 +249,7 @@
           </div>
 
           <div class="modal-footer">
-            <!-- Bouton annuler ou envoi -->
+            <!-- Cancel or send posts button -->
             <button
             type="button"
             role="button"
@@ -261,7 +260,7 @@
 
             <button
             v-if="commentModified.content !== ''"
-            @click.prevent="editComment(comment.id), reload()"
+            @click.prevent="editComment(comment.id)"
             type="button"
             role="button"
             class="btn btn-dark align-items-center rounded-pill">
@@ -357,9 +356,7 @@ export default {
     },
     createComment() {
       console.log(this.postId, this.comment);
-
-    
-      if (this.comment.content == null  || this.comment.content == "" )
+     if (this.comment.content == null  || this.comment.content == "" )
        {
         let msgReturn = document.getElementById("msgError");
         msgReturn.classList.add("text-danger");
@@ -380,8 +377,6 @@ export default {
     },
     editComment(commentId) {
       console.log(commentId);
-      
-      
       axios
         .put("http://localhost:3000/api/comment/" + commentId, { content: this.commentModified.content }, {
           headers: {
@@ -415,11 +410,13 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .imageprofil {
 object-fit: cover;
 height: 40px;
 width: 40px;
 }
+
 </style>
 

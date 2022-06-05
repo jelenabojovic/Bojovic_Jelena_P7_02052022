@@ -29,7 +29,6 @@ export default {
       alert ("Votre publication sera publié")
       const Wall =this.$refs.monWall
       Wall.getAllPosts ();
-
     }
   },
 };
