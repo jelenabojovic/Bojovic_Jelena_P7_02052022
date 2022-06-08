@@ -7,18 +7,25 @@
   </router-link>
     
     <ul class="nav">
+      <!--My profile icon-->
       <li class="nav-item mt-3 px-4 ">
-    <router-link to ="/profile" >
+    <router-link to ="/:id" >
     <font-awesome-icon icon="user" aria-label="Mon profil" title="Mon profil"/>
     </router-link>
       </li>
-
+      <!--Members list icon-->
+      <li class="nav-item mt-3 px-4 ">
+    <router-link to ="/members" >
+    <font-awesome-icon icon="users" aria-label="Members list" title="Members"/>
+    </router-link>
+      </li>
+     <!--Feed icon-->
       <li class="nav-item  mt-3 px-4 ">
         <router-link to ="/wall">
           <font-awesome-icon icon="house" aria-label="Fil d'actualité" title="Fil d'actualité"/>
     </router-link>
     </li>
-
+      <!--Logout icon-->
      <li class="nav-item  mt-3 px-4">
        <router-link to ="/" @click="logout">
        <font-awesome-icon icon="right-from-bracket" aria-label="Me déconnecter" title="Me deconnecter"/>
