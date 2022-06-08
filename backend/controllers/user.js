@@ -298,47 +298,35 @@ exports.deleteUser = (req, res, next) => {
       attributes: ['id','avatar']
     })
   
-  .then(user => {
-    // Delete profil by a user
-    console.log ("user delete", user.dataValues.id, req.auth.userId)
-    if (user.dataValues.id == req.auth.userId) {
-      // Check if user exists
-      console.log("user id")
-      if (!user) {
-        return res.status(409).json({ error: 'Id non valide !' });
+    .then(user => {
+      // Delete profil by a user
+      console.log ("user delete", user.dataValues.id, req.auth.userId)
+      if (user.dataValues.id == req.auth.userId || isAdmin) {
+        // Check if user exists
+        console.log("user id")
+        if (!user) {
+          return res.status(409).json({ error: 'Id non valide !' });
       // Delete an image if there is one
-      } else if(user.avatar) {
-        const filename = user.avatar.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-        models.User.destroy ({ where: { id: req.params.id }})
-            .then(() => res.status(201).json({ message: 'Utilisateur supprimé !' }))
-            .catch((error) => { res.status(400).json({ message: " erreur 400 - " + error })});
-        });
-      // If not, delete only the profil
       } else {
+        let deroulement = '';
+        if(user.avatar) {
+            const filename = user.avatar;
+            deroulement += 'suppression image ' + `images/users/${filename}`;
+            fs.unlinkSync(`images/users/${filename}`);
+            console.log('avatar supprimé')
+        }
+
+        let message = "Utilisateur supprimé";
+
+        if(isAdmin) {
+            message = "Utilisateur supprimé par l'admin";
+        }
+
         models.User.destroy ({ where: { id: req.params.id }})
-            .then(() => res.status(201).json({ message: 'Utilisateur supprimé !' }))
+            .then(() => res.status(201).json({ message: message, deroulement }))
             .catch((error) => { res.status(400).json({ message: " erreur 400 - " + error })});
-      }
-      // Delete user's profile by admin
-    } else if (isAdmin) {
-      // Check is user exists
-      if (!user) {
-        return res.status(409).json({ error: 'Id non valide !' });
-      // Delete an image if there is one
-      } else if(user.avatar) {
-        const filename = user.avatar.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-        models.User.destroy ({ where: { id: req.params.id  }})
-            .then(() => res.status(201).json({ message: 'Utilisateur supprimé par l\'admin !' }))
-            .catch((error) => { res.status(400).json({ message: " erreur 400 - " + error })});
-        });
-      // If not, delete only the profile
-      } else {
-        models.User.destroy ({ where: { id: req.params.id  }})
-            .then(() => res.status(201).json({ message: 'Utilisateur supprimé par l\'admin !' }))
-            .catch((error) => { res.status(400).json({ message: " erreur 400 - " + error })});
-      }
+    
+    }
     };
   })
   .catch((error) => { res.status(500).json({ message: " erreur 500 - " + error })});

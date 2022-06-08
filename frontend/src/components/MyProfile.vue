@@ -4,6 +4,7 @@
       <div class="row">
         <article class="col-md-5 d-flex justify-content-center align-items-center">
           <div>
+            {{$route.params}}
             <!-- User avatar -->
             <img class="user_avatar rounded-circle mr-2 " alt=" profil avatar"
             v-if="userData.data.avatar != null"
@@ -290,9 +291,9 @@
     </div>
     </section>
     </div>
-
+    A. {{localStorageIsAdmin}} B. {{userId}} C. {{localStorageIsAdmin}}
     <button
-      v-if="localstorageIsAdmin === 'true' || userId === localstorageUserId"
+      v-if="localStorageIsAdmin === 'true' || userId === localStorageUserId"
       type="button"
       role="button"
       aria-label="Supprimer mon compte"
@@ -316,8 +317,6 @@ data() {
         firstName: "",
         email: "",
         service: "",
-        localstorageIsAdmin:'',
-        isAdmin: true,
       },
       avatarModified: "",
       passwordForm: false,
@@ -330,7 +329,10 @@ data() {
       inputFirstNameHidden:true,
       inputEmailHidden:true,
       inputServiceHidden:true,
-
+      
+      localStorageIsAdmin:'',
+        isAdmin: true,
+        
       userData: {
         data: {
           avatar:""
@@ -349,8 +351,9 @@ data() {
   },
   created() {
     this.createUserData();
-    this.localstorageIsAdmin = localStorage.isAdmin;
-    this.localstorageUserId = localStorage.userId;
+    const user = JSON.parse(localStorage.user)
+    this.localStorageIsAdmin = user.data.isAdmin;
+    this.localStorageUserId = user.data.userId;
   },
 
   methods: {
@@ -524,6 +527,7 @@ data() {
         .catch((error) => console.log(error));
     },
     deleteAccount() {
+       console.log(this.localStorageIsAdmin)
       if (window.confirm("Etes-vous sûr de vouloir supprimer votre compte ?")) {
         axios
           .delete(
@@ -536,7 +540,8 @@ data() {
           )
           .then(() => {
             localStorage.removeItem("user");
-            if (this.localstorageIsAdmin === 'false') {           
+            console.log(this.localStorageIsAdmin)
+            if (this.localStorageIsAdmin === 'false' || this.localStorageIsAdmin === undefined) {           
             this.$router.push("/signup")
           } else {           
             this.$router.push("/wall")
