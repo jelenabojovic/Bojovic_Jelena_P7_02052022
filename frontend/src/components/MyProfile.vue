@@ -171,7 +171,7 @@
                
                <button
                  @click="modifyEmail()"
-                type="submit"
+                type="button"
                 role="button"
                 aria-label="Modifer email envoi"
                 class="btn btn-outline-dark rounded-pill">
@@ -430,6 +430,7 @@ data() {
             this.newPassword = "";
             this.newPasswordConfirm = "";
             this.createUserData();
+            this.$router.push("/")
           })
           .catch((err) => {
             console.log(err);
@@ -535,7 +536,12 @@ data() {
           )
           .then(() => {
             localStorage.removeItem("user");
-            this.$router.push("/signup");
+            if (this.localstorageIsAdmin === 'false') {           
+            this.$router.push("/signup")
+          } else {           
+            this.$router.push("/wall")
+          }
+
           })
           .catch((error) => console.log(error));
       }

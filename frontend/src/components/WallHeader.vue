@@ -1,7 +1,7 @@
 <template>
   <header>
    <nav class="navbar navbar-light ">
-  <router-link to = "/" class="text-decoration-none  text-dark"> 
+  <router-link to = "/about" class="text-decoration-none  text-dark"> 
     <img class ="navbar-brand " src="../assets/icon.svg" width="50" height="50"  alt="logo Groupomania"/>
     Groupomania
   </router-link>
