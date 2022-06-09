@@ -4,11 +4,11 @@
       <div class="row">
         <article class="col-md-5 d-flex justify-content-center align-items-center">
           <div>
-            {{$route.params}}
+
             <!-- User avatar -->
             <img class="user_avatar rounded-circle mr-2 " alt=" profil avatar"
-            v-if="userData.data.avatar != null"
-            :src="`http://localhost:3000/images/users/${userData.data.avatar}`"/>
+            v-if="currentUser.avatar != null"
+            :src="`http://localhost:3000/images/users/${currentUser.avatar}`"/>
             <div v-else>
               <img class="user_avatar rounded-circle mr-2" src="../assets/avatar.png"  />
             </div>
@@ -68,7 +68,7 @@
               </button>
             </div>
 
-            <p class="card-text text-start"> {{ userData.data.lastName }} </p>
+            <p class="card-text text-start"> {{ currentUser.lastName }} </p>
             
             <form
             id="editNom"
@@ -111,7 +111,7 @@
               </button>
             </div>
 
-            <p class="card-text text-start"> {{ userData.data.firstName }}</p>
+            <p class="card-text text-start"> {{ currentUser.firstName }}</p>
 
             <form
             id="editPrenom"
@@ -154,7 +154,7 @@
               </button>
             </div>
 
-             <p class="card-text text-start"> {{ userData.data.email }} </p>
+             <p class="card-text text-start"> {{ currentUser.email }} </p>
 
             <form
             id="editEmail"
@@ -197,7 +197,7 @@
               </button>
             </div>
 
-             <p class="card-text text-start"> {{ userData.data.service }}</p>
+             <p class="card-text text-start"> {{ currentUser.service }}</p>
 
             <form 
             id="editPoste"
@@ -291,14 +291,14 @@
     </div>
     </section>
     </div>
-    A. {{localStorageIsAdmin}} B. {{userId}} C. {{localStorageIsAdmin}}
+
     <button
-      v-if="localStorageIsAdmin === 'true' || userId === localStorageUserId"
+      v-if="localStorageIsAdmin === true || currentUser.id === localStorageUserId"
       type="button"
       role="button"
       aria-label="Supprimer mon compte"
       class="btn btn-danger mt-5 w-50 m-auto rounded-pill"
-       @click.prevent="deleteAccount()" >
+      @click.prevent="deleteAccount()" >
         Supprimer votre compte
       </button>      
     </section>
@@ -311,13 +311,12 @@ import axios from "axios";
 export default {
     name: "MyProfile",
 data() {
+     
     return {
-      userModified: {
-        lastName: "",
-        firstName: "",
-        email: "",
-        service: "",
-      },
+      userModified: {},
+
+      currentUser:{},
+
       avatarModified: "",
       passwordForm: false,
 
@@ -352,8 +351,16 @@ data() {
   created() {
     this.createUserData();
     const user = JSON.parse(localStorage.user)
+    console.log(user)
     this.localStorageIsAdmin = user.data.isAdmin;
     this.localStorageUserId = user.data.userId;
+    
+    axios
+      .get(`http://localhost:3000/api/auth/${this.$route.params.id}`, { headers: { 'authorization': 'Bearer ' + localStorage.getItem('token')}})
+      .then((response) => { 
+        this.currentUser = response.data;
+      })
+      .catch((error) => console.log('Erreur de la page, reconnectez-vous !'))
   },
 
   methods: {
@@ -531,7 +538,7 @@ data() {
       if (window.confirm("Etes-vous sûr de vouloir supprimer votre compte ?")) {
         axios
           .delete(
-            "http://localhost:3000/api/auth/" + this.userData.data.userId,
+            "http://localhost:3000/api/auth/" + this.currentUser.id,
             {
               headers: {
                 authorization: "Bearer " + localStorage.getItem("token"),
@@ -539,9 +546,10 @@ data() {
             }
           )
           .then(() => {
-            localStorage.removeItem("user");
+    
             console.log(this.localStorageIsAdmin)
-            if (this.localStorageIsAdmin === 'false' || this.localStorageIsAdmin === undefined) {           
+            if (this.localStorageIsAdmin === false || this.localStorageIsAdmin === undefined) { 
+            localStorage.removeItem("user");          
             this.$router.push("/signup")
           } else {           
             this.$router.push("/wall")

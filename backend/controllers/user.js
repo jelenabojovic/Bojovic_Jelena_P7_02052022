@@ -297,37 +297,41 @@ exports.deleteUser = (req, res, next) => {
       },
       attributes: ['id','avatar']
     })
-  
     .then(user => {
-      // Delete profil by a user
-      console.log ("user delete", user.dataValues.id, req.auth.userId)
-      if (user.dataValues.id == req.auth.userId || isAdmin) {
-        // Check if user exists
-        console.log("user id")
-        if (!user) {
-          return res.status(409).json({ error: 'Id non valide !' });
-      // Delete an image if there is one
-      } else {
-        let deroulement = '';
-        if(user.avatar) {
-            const filename = user.avatar;
-            deroulement += 'suppression image ' + `images/users/${filename}`;
-            fs.unlinkSync(`images/users/${filename}`);
-            console.log('avatar supprimé')
+        // Delete profil by a user
+        console.log ("user delete", user.dataValues.id, req.auth.userId)
+        if (user.dataValues.id == req.auth.userId || isAdmin) {
+            // Check if user exists
+            console.log("user id")
+            if (!user) {
+                return res.status(409).json({ error: 'Id non valide !' });
+                // Delete an image if there is one
+            } else {
+                if(user.avatar) {
+                    const filename = user.avatar;
+                    deroulement += 'suppression image ' + `images/users/${filename}`;
+                    fs.unlinkSync(`images/users/${filename}`);
+                    console.log('avatar supprimé')
+                }
+
+                let message = "Utilisateur supprimé";
+
+                if(isAdmin) {
+                    message = "Utilisateur supprimé par l'admin";
+                }
+                models.Post.destroy ({ where: { User_id: req.params.id }})
+                    .then (() => {
+                        models.Comment.destroy ({ where: { User_id: req.params.id }})
+                            .then (() => {
+                                models.User.destroy ({ where: { id: req.params.id }})
+                                    .then(() => res.status(201).json({ message: message }))
+                                    .catch((error) => { res.status(400).json({ message: " erreur 400 - " + error })});
+                            })
+                    })
+                    .catch((error) => {
+                        res.status(500).json({ message: " erreur 500 - " + error })
+                    });
+            }
         }
-
-        let message = "Utilisateur supprimé";
-
-        if(isAdmin) {
-            message = "Utilisateur supprimé par l'admin";
-        }
-
-        models.User.destroy ({ where: { id: req.params.id }})
-            .then(() => res.status(201).json({ message: message, deroulement }))
-            .catch((error) => { res.status(400).json({ message: " erreur 400 - " + error })});
-    
-    }
-    };
-  })
-  .catch((error) => { res.status(500).json({ message: " erreur 500 - " + error })});
-};
+    });
+}

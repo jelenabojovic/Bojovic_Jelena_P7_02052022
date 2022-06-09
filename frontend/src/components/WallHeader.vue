@@ -5,11 +5,11 @@
     <img class ="navbar-brand " src="../assets/icon.svg" width="50" height="50"  alt="logo Groupomania"/>
     Groupomania
   </router-link>
-    
+
     <ul class="nav">
       <!--My profile icon-->
       <li class="nav-item mt-3 px-4 ">
-    <router-link to ="/:id" >
+    <router-link v-if="userData.data" :to ="`/profile/${userData.data.userId}`" >
     <font-awesome-icon icon="user" aria-label="Mon profil" title="Mon profil"/>
     </router-link>
       </li>
@@ -40,10 +40,25 @@
  export default {
     name: "WallHeader",
     data() {
+      return{
+        userData:{}
+      }
      },
-     mounted() {
-    },
+     mounted () {
+       this.createUserData();
+     },
      methods: {
+     createUserData() {
+      if (localStorage.getItem("user")) {
+        try {
+          this.userData = JSON.parse(localStorage.getItem("user"));
+        } catch (e) {
+          localStorage.removeItem("user");
+          console.log("Données corrompues");
+        }
+      }
+    },
+
       logout() {
         localStorage.clear()
         this.$router.push("/");

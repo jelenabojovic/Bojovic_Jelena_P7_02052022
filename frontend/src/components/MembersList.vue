@@ -20,7 +20,7 @@
         <aside class="card-body">
           <h5 class="card-title">{{  user.lastName }}  {{ user.firstName }}</h5>
           <p> {{ user.service }}</p>
-          <router-link class="btn btn-dark rounded-pill" :to="`/${user.id}`">Voir le profil</router-link>
+          <router-link class="btn btn-dark rounded-pill" :to="`/profile/${user.id}`">Voir le profil</router-link>
         </aside>
       </article>
     </section>
@@ -35,13 +35,7 @@
     data() {
       return {  
         users:[],
-        user: {
-          userId:"",
-          lastName:"",
-          firstname:"",
-          service:"",
-          avatar:"",
-        }
+        user: {}
       };
     },
     
