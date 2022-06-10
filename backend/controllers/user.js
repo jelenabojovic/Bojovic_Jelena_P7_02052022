@@ -298,7 +298,7 @@ exports.deleteUser = (req, res, next) => {
       attributes: ['id','avatar']
     })
     .then(user => {
-        // Delete profil by a user
+        // Delete user's profile by a user or admin
         console.log ("user delete", user.dataValues.id, req.auth.userId)
         if (user.dataValues.id == req.auth.userId || isAdmin) {
             // Check if user exists
@@ -309,7 +309,6 @@ exports.deleteUser = (req, res, next) => {
             } else {
                 if(user.avatar) {
                     const filename = user.avatar;
-                    deroulement += 'suppression image ' + `images/users/${filename}`;
                     fs.unlinkSync(`images/users/${filename}`);
                     console.log('avatar supprimé')
                 }

@@ -97,11 +97,11 @@
               </p>
             </div>
             <p id="signupError"></p>
-
+{{checkDataSignup }} {{dataSignup}}
             <!-- Form sending -->
            <button
               @click="signup()"
-              :disabled="checkDataSignup()"
+              :disabled="checkDataSignup"
               type="button"
               class="col btn btn-secondary mt-5"
             >
@@ -136,26 +136,30 @@ export default {
       },
     };
   },
-  methods: {
+
+  computed: {
     checkDataSignup() {
       const regexEmail = /^[A-Za-z0-9\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9-]{2,4}$/;
       const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/g;
       const regexAlpha =
-        /^[a-zA-Zçñàéèêëïîôüù][a-zA-Zçñàéèêëïîôüù\- '\\.]{1,25}$/g;
+        /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
       if (
-          this.dataSignup.email !== null &&
-          this.dataSignup.lastName !== null &&
-          this.dataSignup.firstName !== null &&
-          this.dataSignup.service !== null &&
-          this.dataSignup.password !== null &&
+          this.dataSignup.email !== '' &&
+          this.dataSignup.lastName !== '' &&
+          this.dataSignup.firstName !== '' &&
+          this.dataSignup.service !== '' &&
+          this.dataSignup.password !== '' &&
         regexPassword.test(this.dataSignup.password) &&
         regexEmail.test(this.dataSignup.email) &&
         regexAlpha.test(this.dataSignup.lastName) &&
         regexAlpha.test(this.dataSignup.firstName)
       )
-        return true;
+        return false;
+    else return true;
     },
-
+  },
+  methods: {
+    
     signup() {
       axios
         .post("http://localhost:3000/api/auth/signup", this.dataSignup)

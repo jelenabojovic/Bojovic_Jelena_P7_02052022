@@ -385,7 +385,7 @@ data() {
       console.log("test", fd.get("avatar"));
       axios
         .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          "http://localhost:3000/api/auth/update/" + this.currentUser.id, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -450,11 +450,12 @@ data() {
       }
     },
     modifyLastName () {
-      const fd = new FormData();
-      fd.append("lastName", this.userModified.lastName);
-      axios
-        .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+      if (this.userModified.lastName !="") {
+        const fd = new FormData();
+        fd.append("lastName", this.userModified.lastName);
+        axios
+          .put(
+          "http://localhost:3000/api/auth/update/" + this.currentUser.id, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -463,19 +464,27 @@ data() {
         )
         .then((response) => {
           localStorage.setItem("user", JSON.stringify(response.data));
+          this.currentUser.lastName=this.userModified.lastName;
           this.userModified.lastName = "";
+
           alert("Nom modifié !");
           this.inputLastNameHidden=true;
           this.createUserData();
+          
         })
         .catch((error) => console.log(error));
+    }
+       else {
+        alert ("champ vide")
+       }
     },
     modifyFirstName () {
+       if (this.userModified.firstName !="") {
       const fd = new FormData();
       fd.append("firstName", this.userModified.firstName);
       axios
         .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          "http://localhost:3000/api/auth/update/" + this.currentUser.id, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -490,13 +499,18 @@ data() {
           this.createUserData();
         })
         .catch((error) => console.log(error));
+    }
+    else {
+        alert ("champ vide")
+       }
     },
     modifyEmail () {
+      if (this.userModified.email !="") {
       const fd = new FormData();
       fd.append("email", this.userModified.email);
       axios
         .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          "http://localhost:3000/api/auth/update/" + this.currentUser.id, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -511,13 +525,19 @@ data() {
           this.createUserData();
         })
         .catch((error) => console.log(error));
+    }
+       else {
+          alert ("champ vide")
+          }
+
     },
     modifyService () {
+      if (this.userModified.email !="") {
      const fd = new FormData();
       fd.append("service", this.userModified.service);
       axios
         .put(
-          "http://localhost:3000/api/auth/update/" + this.userData.data.userId, fd,
+          "http://localhost:3000/api/auth/update/" + this.currentUser.id, fd,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
@@ -532,6 +552,10 @@ data() {
           this.createUserData();
         })
         .catch((error) => console.log(error));
+    }
+    else {
+          alert ("champ vide")
+          }
     },
     deleteAccount() {
        console.log(this.localStorageIsAdmin)
@@ -548,10 +572,10 @@ data() {
           .then(() => {
     
             console.log(this.localStorageIsAdmin)
-            if (this.localStorageIsAdmin === false || this.localStorageIsAdmin === undefined) { 
+            if (this.localStorageIsAdmin === false) { 
             localStorage.removeItem("user");          
             this.$router.push("/signup")
-          } else {           
+          } else {       
             this.$router.push("/wall")
           }
 

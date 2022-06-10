@@ -136,7 +136,7 @@ exports.getOnePost = (req, res, next) => {
 
   /* Post delete */
 
-exports.deletePost = (req, res, next) => {
+  exports.deletePost = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
     const isAdmin = decodedToken.isAdmin;
@@ -153,17 +153,20 @@ exports.deletePost = (req, res, next) => {
           });
         } else {
           fs.unlink(`images/posts/${post.image}`, () => {
-            post
-              .destroy()
-              .then(() => res.status(200).json({
-                message: "Post supprimé !"
-              }))
-              .catch((error) => res.status(400).json({
-                error
-              }));
-          });
-        }
-      })
+            models.Comment
+              .destroy({ where: { Post_id: post.id } })
+              .then(() =>
+                post
+                .destroy()
+                .then(() => res.status(200).json({
+                    message: "Post supprimé !"
+                }))
+                .catch((error) => res.status(400).json({
+                    error
+                })));
+              });
+            }
+          })
       .catch((error) => res.status(500).json({
         error
       }));
