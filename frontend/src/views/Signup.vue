@@ -97,7 +97,7 @@
               </p>
             </div>
             <p id="signupError"></p>
-{{checkDataSignup }} {{dataSignup}}
+
             <!-- Form sending -->
            <button
               @click="signup()"
@@ -141,7 +141,7 @@ export default {
     checkDataSignup() {
       const regexEmail = /^[A-Za-z0-9\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9-]{2,4}$/;
       const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/g;
-      const regexAlpha =
+      const regexName =
         /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
       if (
           this.dataSignup.email !== '' &&
@@ -151,8 +151,8 @@ export default {
           this.dataSignup.password !== '' &&
         regexPassword.test(this.dataSignup.password) &&
         regexEmail.test(this.dataSignup.email) &&
-        regexAlpha.test(this.dataSignup.lastName) &&
-        regexAlpha.test(this.dataSignup.firstName)
+        regexName.test(this.dataSignup.lastName) &&
+        regexName.test(this.dataSignup.firstName)
       )
         return false;
     else return true;

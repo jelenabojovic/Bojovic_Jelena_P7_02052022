@@ -6,15 +6,16 @@
           <div>
 
             <!-- User avatar -->
-            <img class="user_avatar rounded-circle mr-2 " alt=" profil avatar"
+            <img class="user-avatar rounded-circle mr-2 " alt=" profil avatar"
             v-if="currentUser.avatar != null"
             :src="`http://localhost:3000/images/users/${currentUser.avatar}`"/>
             <div v-else>
-              <img class="user_avatar rounded-circle mr-2" src="../assets/avatar.png"  />
+              <img class="user-avatar rounded-circle mr-2" src="../assets/avatar.png"  />
             </div>
             <!-- Modify photo button -->
             <div>
             <button
+            v-if=" currentUser.id === localStorageUserId"
             type="button"
             role="button"
             class="btn btn-dark rounded-pill"
@@ -59,6 +60,7 @@
               </h2>
 
               <button
+              v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
               type="button"
               role="button"
@@ -102,6 +104,7 @@
               </h3>
 
               <button
+              v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
               type="button"
               role="button"
@@ -144,7 +147,8 @@
                 <strong> Email </strong>
               </h3>
 
-              <button   
+              <button 
+              v-if=" currentUser.id === localStorageUserId"  
               class="btn rounded-pill p-0 ms-2"
               type="button"
               role="button"
@@ -188,6 +192,7 @@
               </h3>
 
               <button  
+              v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
               type="button"
               role="button"
@@ -225,6 +230,7 @@
             <!-- Password modification -->
             <div class="d-flex mt-5 mb-3">
               <button class="btn btn-dark d-flex rounded-pill password"
+              v-if=" currentUser.id === localStorageUserId"
               @click="passwordForm = !passwordForm"
               aria-label="Afficher modification mot de passe"
               data-bs-toggle="collapse"
@@ -299,7 +305,7 @@
       aria-label="Supprimer mon compte"
       class="btn btn-danger mt-5 w-50 m-auto rounded-pill"
       @click.prevent="deleteAccount()" >
-        Supprimer votre compte
+        Supprimer compte
       </button>      
     </section>
   </main>
@@ -307,6 +313,9 @@
 
 <script>
 import axios from "axios";
+
+const regexEmail = /^[A-Za-z0-9\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9-]{2,4}$/;
+const regexName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
 
 export default {
     name: "MyProfile",
@@ -450,7 +459,7 @@ data() {
       }
     },
     modifyLastName () {
-      if (this.userModified.lastName !="") {
+      if (this.userModified.lastName !="" && regexName.test(this.userModified.lastName)) {
         const fd = new FormData();
         fd.append("lastName", this.userModified.lastName);
         axios
@@ -473,13 +482,13 @@ data() {
           
         })
         .catch((error) => console.log(error));
-    }
+       }
        else {
-        alert ("champ vide")
+        alert ("Champ manquant ou erroné")
        }
     },
     modifyFirstName () {
-       if (this.userModified.firstName !="") {
+       if (this.userModified.firstName !="" && regexName.test(this.userModified.firstName)) {
       const fd = new FormData();
       fd.append("firstName", this.userModified.firstName);
       axios
@@ -493,19 +502,20 @@ data() {
         )
         .then((response) => {
           localStorage.setItem("user", JSON.stringify(response.data));
+          this.currentUser.firstName=this.userModified.firstName;
           this.userModified.firstName = "";
           alert("Prénom modifié !");
           this.inputFirstNameHidden=true;
           this.createUserData();
         })
         .catch((error) => console.log(error));
-    }
-    else {
-        alert ("champ vide")
+       }
+        else {
+        alert ("Champ manquant ou erroné")
        }
     },
     modifyEmail () {
-      if (this.userModified.email !="") {
+      if (this.userModified.email !="" && regexEmail.test(this.userModified.email)) {
       const fd = new FormData();
       fd.append("email", this.userModified.email);
       axios
@@ -519,20 +529,21 @@ data() {
         )
         .then((response) => {
           localStorage.setItem("user", JSON.stringify(response.data));
+           this.currentUser.email=this.userModified.email;
           this.userModified.email = "";
           alert("Email modifié !");
           this.inputEmailHidden=true;
           this.createUserData();
         })
         .catch((error) => console.log(error));
-    }
+       }
        else {
-          alert ("champ vide")
-          }
+          alert ("Champ manquant ou erroné")
+       }
 
     },
     modifyService () {
-      if (this.userModified.email !="") {
+      if (this.userModified.service !="" && regexName.test(this.userModified.service)) {
      const fd = new FormData();
       fd.append("service", this.userModified.service);
       axios
@@ -546,16 +557,17 @@ data() {
         )
         .then((response) => {
           localStorage.setItem("user", JSON.stringify(response.data));
+           this.currentUser.service=this.userModified.service;
           this.userModified.service = "";
           alert("Service modifié !");
           this.inputServiceHidden=true;
           this.createUserData();
         })
         .catch((error) => console.log(error));
-    }
-    else {
-          alert ("champ vide")
-          }
+       }
+        else {
+          alert ("Champ manquant ou erroné")
+        }
     },
     deleteAccount() {
        console.log(this.localStorageIsAdmin)
@@ -588,7 +600,7 @@ data() {
 </script>
 
 <style scoped>
-.user_avatar {
+.user-avatar {
   width:150px;
   height:150px;
   margin-bottom: 15px;

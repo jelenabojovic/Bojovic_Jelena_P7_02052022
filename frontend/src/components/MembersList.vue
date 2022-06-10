@@ -14,7 +14,7 @@
         alt="Photo de l'utilisateur" />
 
         <div v-else>
-            <img class="user-avatar rounded-circle mr-2" src="../assets/icon.png"  />
+            <img class="user-avatar rounded-circle mr-2" src="../assets/avatar.png"  />
         </div>
         <!-- Informations -->
         <aside class="card-body">
