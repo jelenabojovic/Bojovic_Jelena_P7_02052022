@@ -54,7 +54,7 @@
                 class="rounded-circle imageprofil "
                 alt="Photo de profil par défaut"
                 v-else
-                src="../assets/icon.png"/>
+                src="../assets/avatar.png"/>
               </div>
             </div>
               
