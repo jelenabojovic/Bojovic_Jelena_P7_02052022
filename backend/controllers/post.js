@@ -155,7 +155,7 @@ exports.getOnePost = (req, res, next) => {
           fs.unlink(`images/posts/${post.image}`, () => {
             models.Comment
               .destroy({ where: { Post_id: post.id } })
-              .then(() =>
+              .then(() => 
                 post
                 .destroy()
                 .then(() => res.status(200).json({
@@ -163,10 +163,14 @@ exports.getOnePost = (req, res, next) => {
                 }))
                 .catch((error) => res.status(400).json({
                     error
-                })));
-              });
-            }
-          })
+                }))
+              )
+              .catch((error) => res.status(400).json({
+                error
+              }));
+            });
+        }
+      })
       .catch((error) => res.status(500).json({
         error
       }));

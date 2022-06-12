@@ -1,6 +1,7 @@
 const models = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const passwordValidator = require("password-validator");
 const fs = require("fs");
 const emailValidator = require("email-validator");
@@ -131,7 +132,7 @@ exports.login = (req, res, next) => {
                 avatar: user.avatar,
                 createdAt: user.createdAt
               },
-              "RANDOM_TOKEN_SECRET", {
+              process.env.JWTTOKEN, {
                 expiresIn: "24h"
               }
             ),

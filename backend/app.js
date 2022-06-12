@@ -13,8 +13,9 @@ const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
 
+
 // Connection to database MySQL
-const sequelize = new Sequelize("groupomania", "root", process.env.PASSWORD, {
+const sequelize = new Sequelize("groupomania", process.env.DBUSER, process.env.DBPASSWORD, {
   host: "localhost",
   dialect: "mysql",
 });
