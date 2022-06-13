@@ -55,7 +55,7 @@ Ouvrir un autre terminal dans le dossier frontend puis effectuer les lignes de c
 
 `npm install`
 
-`npm run serve`
+`npm run dev`
 
 Ouvrir le navigateur a l'adresse `http://localhost:8080/`
 
