@@ -20,9 +20,9 @@
                 <img
                 class="rounded-circle imageprofil "
                 alt="Photo de profil par défaut"
-               v-else
-               src="../assets/avatar.png" />
-             </div>
+                v-else
+                src="../assets/avatar.png" />
+              </div>
 
               <div class="text-start ps-2" aria-label="nom prénom de l'utilisateur">
                   <p class="card-text my-0">
@@ -89,7 +89,6 @@
                 <h4 class="modal-title h4">
                   Modifiez votre post
                 </h4>
-
                 <button
                 type="button"
                 role="button"
@@ -102,8 +101,7 @@
               <div class="modal-body">
                 <form enctype="multipart/form-data" aria-label="Formulaire envoi nouveau post">
                   <div class="mb-3">
-
-                    <!--  modification post field-->
+                  <!--  modification post field-->
                     <textarea
                     class="form-control"
                     v-model="postModified.content"
@@ -117,7 +115,6 @@
                     <label class="input-group-text my-3 btn-outline-dark labelimagepost--custom">
                       Choisir image
                       <input
-                      
                       aria-label="Choisir image post"
                       class="form-control form-control-sm ms-3"
                       type="file"
@@ -128,7 +125,7 @@
                   </div>
                 </form>
               </div>
-
+         <!--cancellation button-->
               <div class="modal-footer">
                 <button
                 type="button"
@@ -148,7 +145,6 @@
                  aria-label="Enregister modification du post">
                   Enregistrer
                 </button>
-                
               </div>
             </div>
           </div>
@@ -184,7 +180,6 @@ export default {
         avatar: "",
         userId: "",
       },
-    
       allPosts: [],
       postModified: {},
     };

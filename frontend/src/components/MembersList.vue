@@ -16,7 +16,7 @@
         <div v-else>
             <img class="user-avatar rounded-circle mr-2" src="../assets/avatar.png"  />
         </div>
-        <!-- Informations -->
+        <!-- Members informations -->
         <aside class="card-body">
           <h5 class="card-title">{{  user.lastName }}  {{ user.firstName }}</h5>
           <p> {{ user.service }}</p>
@@ -54,6 +54,5 @@
   width:150px;
   height:150px;
   margin-bottom: 15px;
-
 }
 </style>

@@ -17,8 +17,7 @@
                 placeholder=""
                 aria-describedby="lastName"
                 required
-                minlength="2"
-              />
+                minlength="2"/>
             </div>
               <!-- First name -->
             <div class="form-group">
@@ -31,8 +30,7 @@
                 placeholder=""
                 required
                 aria-describedby="firstName"
-                minlength="2"
-              />
+                minlength="2"/>
             </div>
               <!-- Email -->
             <div class="form-group">
@@ -44,10 +42,8 @@
                 id="email"
                 placeholder=""
                 aria-describedby="email"
-                required
-              />
+                required/>
             </div>
-            
               <!-- Job position -->
             <div class="form-group">
               <label for="service">Poste occupé</label>
@@ -58,11 +54,9 @@
                 id="service"
                 aria-describedby="service"
                 placeholder=""
-                required
-              />
+                required/>
             </div>
-            
-                <!-- Password -->
+               <!-- Password -->
             <div class="form-group">
               <label for="password">Mot de passe</label>
               <p class="help">(entre 8 et 20 caractères, sans espace et au minimum 1 chiffre, 1 minuscule et 1 majuscule)</p>
@@ -74,12 +68,11 @@
                 required
                 minlength="8"
                 placeholder="********"
-              />
+                aria-describedby="mot de passe"/>
             </div>
             <div class="form-group">
               <label for="passwordConfirmation"
-                >Confirmer votre mot de passe</label
-              >
+                >Confirmer votre mot de passe</label>
               <input
                 v-model="dataSignup.passwordConfirmation"
                 type="password"
@@ -87,12 +80,10 @@
                 id="passwordConfirmation"
                 required
                 minlength="8"
-                placeholder="********"
-              />
-              <p
-                v-if="dataSignup.password !== dataSignup.passwordConfirmation"
-                class="errorMsg"
-              >
+                placeholder="********"/>
+       <!--Error message if the password is not confirmed-->
+              <p v-if="dataSignup.password !== dataSignup.passwordConfirmation"
+                class="errorMsg" >
                 Veuillez confirmer votre mot de passe
               </p>
             </div>
@@ -103,17 +94,17 @@
               @click="signup()"
               :disabled="checkDataSignup"
               type="button"
-              class="col btn btn-secondary mt-5"
-            >
+              class="col btn btn-secondary mt-5">
               S'inscrire
             </button>
           </form>
         </div>
       </div>
     </main>
-    <Footer />
+  <Footer />
   </div>
 </template>
+
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
@@ -182,9 +173,6 @@ export default {
 <style scoped>
 .connexion {
   width: 50%;
-}
-.errorMsg {
-  color: red;
 }
 #signupError{
   color: red;

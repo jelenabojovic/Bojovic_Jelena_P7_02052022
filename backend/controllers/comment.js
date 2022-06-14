@@ -1,8 +1,9 @@
 const models = require("../models");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-/* Create a comment */
+// Create a comment 
 
 exports.createComment = (req, res, next) => {
     const commentObject = {
@@ -28,7 +29,7 @@ exports.createComment = (req, res, next) => {
     }));
 };
 
-  /* Modify a comment */
+//Modify a comment 
 
 exports.modifyComment = (req, res, next) => {
     models.Comment.findOne({
@@ -49,8 +50,7 @@ exports.modifyComment = (req, res, next) => {
             updatedAt: comment.updatedAt,
             content: req.body.content,
           };
-  
-          comment
+           comment
             .update(commentObject)
             .then(() =>
               res.status(200).json({
@@ -66,11 +66,11 @@ exports.modifyComment = (req, res, next) => {
     }));
 };
 
-/* Delete a comment */
+// Delete a comment 
 
 exports.deleteComment = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    const decodedToken = jwt.verify(token, process.env.JWTTOKEN);
     const isAdmin = decodedToken.isAdmin;
     
     models.Comment.findOne({
@@ -94,7 +94,7 @@ exports.deleteComment = (req, res, next) => {
   .catch((error) => { res.status(500).json({ message: " erreur 500 - " + error })});
   };
 
-  /* Get all comments */
+  // Get all comments 
 
 exports.getAllComments = (req, res, next) => {
     models.Comment.findAll({

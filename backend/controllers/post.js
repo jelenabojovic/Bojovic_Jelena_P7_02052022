@@ -1,8 +1,9 @@
 const models = require("../models");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-/* Create a post */
+//Create a post 
 
 exports.createPost = (req, res, next) => {
     const postObject = {
@@ -29,7 +30,7 @@ exports.createPost = (req, res, next) => {
     }));
 };
 
-  /* Modify a post */
+  // Modify a post 
 
 exports.modifyPost = (req, res, next) => {
     models.Post.findOne({
@@ -59,8 +60,7 @@ exports.modifyPost = (req, res, next) => {
             }
             postObject.image = req.file.filename;
           }
-  
-          post
+           post
             .update(postObject)
             .then(() =>
               res
@@ -78,7 +78,7 @@ exports.modifyPost = (req, res, next) => {
     }));
 };
 
-/*Display all posts */
+//Display all posts 
 
 exports.getAllPosts = (req, res, next) => {
     console.log ("get all posts")
@@ -107,7 +107,7 @@ exports.getAllPosts = (req, res, next) => {
         });
     };
 
-     /* Display  one post */
+  //Display  one post 
 
 exports.getOnePost = (req, res, next) => {
     models.Post.findOne({
@@ -134,11 +134,11 @@ exports.getOnePost = (req, res, next) => {
       .catch((error) => res.status(500).json(error));
   };
 
-  /* Post delete */
+  //Post delete 
 
   exports.deletePost = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    const decodedToken = jwt.verify(token, process.env.JWTTOKEN);
     const isAdmin = decodedToken.isAdmin;
     models.Post.findOne({
         where: {

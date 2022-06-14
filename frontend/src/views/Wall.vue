@@ -3,9 +3,7 @@
    <WallHeader/>
    <CreatePost @postCreated="postCreated"/>
    <Posts ref="monWall"/>
-
-
-   </div>
+  </div>
 </template>
 
 <script>

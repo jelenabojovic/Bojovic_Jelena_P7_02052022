@@ -21,6 +21,7 @@
               type="password"
               class="form-control"
               id="floatingPassword"
+              aria-describedby="password"
               placeholder="Password">
               <label for ="floatingPassword">Mot de passe </label>
           </div>
@@ -29,8 +30,7 @@
             @click="login()"
             type="button"
             class="col btn btn-secondary"
-            :disable="checkDataLogin()"
-          >
+            :disable="checkDataLogin()">
             Connexion
           </button>
           <p id="loginError" class="mt-2 text-danger text-center"></p>
@@ -93,6 +93,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .form-floating {
   margin-bottom: 10px;
@@ -108,8 +109,7 @@ form {
 .connexion {
   width: 50%;
 }
-.btn-secondary,
-.btn-primary {
+.btn-secondary {
   display: block;
   margin: auto;
   width: 50%;

@@ -24,7 +24,7 @@
             aria-label="Modifier image">
               Modifier image
             </button>
-
+          <!--Choose image input-->
             <form
             class="collapse fade"
             id="editImage"
@@ -46,9 +46,9 @@
                 Valider
               </button>
             </form>
-            </div>
           </div>
-        </article>
+         </div>
+       </article>
 
         <!-- USER INFO -->
         <section class="col-md-7 border-start">
@@ -58,7 +58,7 @@
               <h2 class="h6 text-start mb-0 d-flex align-items-center">
                 <strong> Nom </strong>
               </h2>
-
+          <!--button for last name modification input-->
               <button
               v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
@@ -69,15 +69,14 @@
              <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit Nom" />
               </button>
             </div>
-
+          <!--User's last name-->
             <p class="card-text text-start"> {{ currentUser.lastName }} </p>
-            
+            <!--Input for last name modification-->
             <form
-            id="editNom"
-            aria-labelledby="Modification nom" >
-
-            <div class="d-flex mb-3" v-if="inputLastNameHidden==false">
-              <input
+             id="editNom"
+             aria-labelledby="Modification nom" >
+              <div class="d-flex mb-3" v-if="inputLastNameHidden==false">
+               <input
                 class="form-control form-control-sm me-3"
                 type="text"
                 name="nom"
@@ -85,7 +84,7 @@
                 aria-label="Champs Nom"
                 pattern="(-?([A-Z].\s)?([A-Z][a-z]+)\s?)+([A-Z]'([A-Z][a-z]+))?"
                 required/>
-
+              <!--Last name modification button-->
                 <button
                 @click="modifyLastName()"
                 type="button"
@@ -95,14 +94,14 @@
                   <font-awesome-icon class="fa-sm" icon="check" alt="Modifier nom" />
                 </button>
               </div>
-             </form>
+            </form>
 
             <!-- First name modification -->
             <div class="d-flex">
               <h3 class="h6 text-start mb-0 d-flex align-items-center">
                 <strong> Prénom </strong>
               </h3>
-
+            <!--Button for first name modification input-->
               <button
               v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
@@ -113,13 +112,12 @@
               <font-awesome-icon class="fa-sm text-black-50" icon="edit"  alt="Edit Prénom" />
               </button>
             </div>
-
+              <!--User's first name-->
             <p class="card-text text-start"> {{ currentUser.firstName }}</p>
-
+              <!--Input for first name modification-->
             <form
-            id="editPrenom"
-            aria-labelledby="Modification prénom">
-
+             id="editPrenom"
+             aria-labelledby="Modification prénom">
               <div class="d-flex mb-3" v-if="inputFirstNameHidden==false">
                 <input
                 class="form-control form-control-sm me-3"
@@ -129,7 +127,7 @@
                 v-model="userModified.firstName"
                 pattern="[A-Za-zÀ-ÖØ-öø-ÿ-]{2,15}"
                 required />
-                
+              <!--First name modification button-->
                 <button
                  @click="modifyFirstName()"
                 type="button"
@@ -146,7 +144,7 @@
               <h3 class="h6 text-start mb-0 d-flex align-items-center">
                 <strong> Email </strong>
               </h3>
-
+             <!--Button for email modification input-->
               <button 
               v-if=" currentUser.id === localStorageUserId"  
               class="btn rounded-pill p-0 ms-2"
@@ -157,15 +155,14 @@
                 <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit email" />
               </button>
             </div>
-
+              <!--User's email-->
              <p class="card-text text-start"> {{ currentUser.email }} </p>
-
+             <!--Input for email modification-->
             <form
-            id="editEmail"
-            aria-labelledby="Modification email">
-
-            <div class="d-flex mb-3" v-if="inputEmailHidden==false">
-             <input
+             id="editEmail"
+             aria-labelledby="Modification email">
+             <div class="d-flex mb-3" v-if="inputEmailHidden==false">
+              <input
                 class="form-control form-control-sm me-3"
                 type="text"
                 name="email"
@@ -173,7 +170,7 @@
                  v-model="userModified.email"
                  pattern="\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b"
                 required/>
-               
+                 <!--Email modification button-->
                <button
                  @click="modifyEmail()"
                 type="button"
@@ -185,13 +182,13 @@
               </div>
             </form>
 
-        <!--Job position modification-->
-          <div class="d-flex">
+           <!--Job position modification-->
+            <div class="d-flex">
               <h3 class="h6 text-start mb-0 d-flex align-items-center">
                 <strong> Poste occupé chez Groupomania: </strong>
               </h3>
-
-              <button  
+              <!--Button for service modification input-->
+               <button  
               v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
               type="button"
@@ -199,23 +196,22 @@
               aria-label="Afficher modification poste"
               @click="inputServiceHidden=!inputServiceHidden">
                 <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit poste" />
-              </button>
-            </div>
-
+               </button>
+             </div>
+              <!--User's service-->
              <p class="card-text text-start"> {{ currentUser.service }}</p>
-
+               <!--Input for service modification-->
             <form 
             id="editPoste"
             aria-labelledby="Modification poste">
-
               <div class="d-flex mb-3" v-if="inputServiceHidden==false">
                 <input
                 class="form-control form-control-sm me-3"
                 type="text"
                 name="prenom"
                 aria-label="Champs modification email"
-                 v-model="userModified.service"
-               >
+                 v-model="userModified.service">
+                 <!--Service modification button-->
                <button
                  @click="modifyService ()"
                 type="button"
@@ -239,44 +235,45 @@
               </button>
             </div>
 
-            <!--Password form-->
+            <!--PASSWORD FORM-->
               
-        <div v-show="passwordForm" class="passwordForm jumbotron">
+          <div v-show="passwordForm" class="passwordForm jumbotron">
+          <!--Current pasword input-->
             <form>
-            <div class="form-group mb-0">
-            <label for="oldPassword">Mot de passe actuel :</label>
-           <input
-            type="password"
-            name="oldPassword"
-            id="oldPassword"
-            class="form-control"
-            minlength="8"
-            v-model="oldPassword"
-            required
-          />
-          <p id="passwordError"></p>
-        </div>
-        <div class="form-group mb-0">
-          <label for="newPassword">Nouveau mot de passe :</label>
-          <input
-            type="password"
-            name="newPassword"
-            id="newPassword"
-            class="form-control"
-            minlength="8"
-            v-model="newPassword"
-            required
-            v-on:input="checkDataPassword()"
-          />
-          <p v-if="newPassword == oldPassword" class="errorMsg">
-            Votre nouveau mot de passe ne peut pas être identique à l'ancien !
-          </p>
-          <p id="newPasswordError"></p>
-        </div>
-        <div class="form-group mb-0">
-          <label for="newPasswordConfirm">
+              <div class="form-group mb-0">
+                <label for="oldPassword">Mot de passe actuel :</label>
+               <input
+               type="password"
+               name="oldPassword"
+               id="oldPassword"
+               class="form-control"
+               minlength="8"
+               v-model="oldPassword"
+               required/>
+               <p id="passwordError"></p>
+              </div>
+              <div class="form-group mb-0">
+          <!--New password input-->
+              <label for="newPassword">Nouveau mot de passe :</label>
+              <input
+              type="password"
+              name="newPassword"
+              id="newPassword"
+              class="form-control"
+              minlength="8"
+              v-model="newPassword"
+              required
+              v-on:input="checkDataPassword()"/>
+             <p v-if="newPassword == oldPassword" class="errorMsg">
+             Votre nouveau mot de passe ne peut pas être identique à l'ancien !
+             </p>
+             <p id="newPasswordError"></p>
+             </div>
+             <div class="form-group mb-0">
+            <!--Input for new password confirmation-->
+            <label for="newPasswordConfirm">
             Confirmer votre nouveau mot de passe :</label >
-          <input
+            <input
             type="password"
             name="newPasswordConfirm"
             id="newPasswordConfirm"
@@ -285,18 +282,19 @@
             v-model="newPasswordConfirm"
             required
             v-on:input="checkDataPassword()"/>
-          <p v-if="newPasswordConfirm != newPassword" class="errorMsg">
+            <p v-if="newPasswordConfirm != newPassword" class="errorMsg">
             Merci d'entrer un mot de passe identique !
-          </p>
+           </p>
+           </div>
+          <!--Password modification button-->
+            <button class="btn btn-dark d-flex rounded-pill" @click.prevent="changePassword()">
+            Valider
+           </button>
+         </form>
         </div>
-        <button class="btn btn-dark d-flex rounded-pill" @click.prevent="changePassword()">
-          Valider
-        </button>
-      </form>
-    </div>
-    </div>
+      </div>
     </section>
-    </div>
+  </div>
 
     <button
       v-if="localStorageIsAdmin === true || currentUser.id === localStorageUserId"
@@ -351,7 +349,6 @@ data() {
       },
     };
   },
-
 
   mounted() {
     this.createUserData();

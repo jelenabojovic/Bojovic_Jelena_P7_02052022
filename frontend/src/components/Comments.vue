@@ -41,16 +41,15 @@
       :id="`afficheCommentaires${postId}`">
         <div class="m-3 rounded-3 shadow-sm pe-1">
           <div class="d-flex justify-content-between">
-
             <!-- Info of person who wrote comments -->
-            <div  class="d-flex align-items-center accordion-body">
-              <div>
-              <img
+            <div  class="d-flex align-items-center accordion-body"> 
+              <div class="comment-avatar">
+               <img
                 class="rounded-circle imageprofil"
                 alt="Photo de profil de l'utilisateur qui commente"
                 v-if="comment.User && comment.User.avatar != null"
                 :src="`http://localhost:3000/images/users/${comment.User.avatar}`"/>
-              <img
+               <img
                 class="rounded-circle imageprofil "
                 alt="Photo de profil par défaut"
                 v-else
@@ -106,16 +105,14 @@
     </div>
 
     <!-- If there is no comments -->
-    <p
-     :id="`afficheCommentaires${postId}`"
+    <p :id="`afficheCommentaires${postId}`"
     v-if="!post.Comments.length" 
     class="collapse m-3">
       Aucun commentaire
     </p>
   
  <!-- Writing a comment -->
-    <section
-    class="modal fade"
+    <section class="modal fade"
     :id="`ModalCommentaire${postId}`"
     tabindex="-1"
     aria-hidden="true">
@@ -138,7 +135,7 @@
             </button>
           </div>
 
-          
+          <!--write a comment-->
           <div class="modal-body py-5">
             <textarea
             class="form-control"
@@ -171,26 +168,23 @@
               alt="Envoyer" />
             </button>
 
-            <button
-            v-else
-            type="button"
-            role="button"
-            aria-label="Créer commentaire bouton désactiver"
-            class="btn btn-dark rounded-pill"
-            disabled>
+            <button v-else
+             type="button"
+             role="button"
+             aria-label="Créer commentaire bouton désactiver"
+             class="btn btn-dark rounded-pill"
+             disabled>
               <font-awesome-icon
               icon="paper-plane"
               alt="Envoyer" />
             </button>
-            
           </div>
         </div>
       </section>
     </section>
 
     <!-- Modify comments -->
-    <div
-    v-for="(comment, index) in post.Comments"
+    <div v-for="(comment, index) in post.Comments"
     v-bind:key="comment.id"
     class="modal fade"
     :id="'modifierCommentaire'+index"
@@ -214,12 +208,10 @@
             </button>
           </div>
 
-        
           <div class="modal-body">
             <form enctype="multipart/form-data">
               <div class="mb-3">
-                <label
-                for="modification-commentaire"
+                <label for="modification-commentaire"
                 class="col-form-label">
                 Mon nouveau commentaire :
                 </label>
@@ -254,7 +246,7 @@
 
             <button
             v-else
-            type=" submit"
+            type="button"
             role="button"
             class="btn btn-dark align-items-center rounded-pill"
             disabled>
@@ -280,7 +272,6 @@ export default {
         userId: "",
         isAdmin: "false",
       },
-      
         comments:[],
         comment: {
         id: "",

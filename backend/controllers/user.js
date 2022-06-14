@@ -7,28 +7,23 @@ const fs = require("fs");
 const emailValidator = require("email-validator");
 
 const passwordSchema = new passwordValidator();
+// Creation of password schema
 passwordSchema
-  .is()
-  .min(8)
-  .is()
-  .max(50)
-  .has()
-  .uppercase()
-  .has()
-  .lowercase()
-  .has()
-  .digits()
-  .has()
-  .not()
-  .spaces();
+.is().min(8)                                    // Minimum length 8
+.is().max(100)                                  // Maximum length 100
+.has().uppercase()                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(2)                                // Must have at least 2 digits
+.has().not().spaces()                           // Should not have spaces
+.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
-  /*Signup*/
-  exports.signup = (req, res, next) => {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    const password = req.body.password;
-    const service = req.body.service;
+  //User signup
+exports.signup = (req, res, next) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
+  const service = req.body.service;
 
     if (
         firstName == null ||
@@ -87,7 +82,7 @@ passwordSchema
       });
     };
 
-/* Login */
+// User login
 
 exports.login = (req, res, next) => {
     const email = req.body.email;
@@ -144,22 +139,22 @@ exports.login = (req, res, next) => {
       }));
   };
 
-  /* Get all users */
+  // Get all users 
   
-  exports.getAllUsers = (req, res, next) => {
-      models.User.findAll()
-        .then((users) => res.status(200).json(users))
-        .catch((error) => res.status(400).json({
+exports.getAllUsers = (req, res, next) => {
+  models.User.findAll()
+     .then((users) => res.status(200).json(users))
+       .catch((error) => res.status(400).json({
           error
         }));
     };
     
-    /* Get one user */
+  // Get one user 
     
-    exports.getOneUser = (req, res, next) => {
-      models.User.findOne({
-          where: {
-            id: req.params.id
+exports.getOneUser = (req, res, next) => {
+  models.User.findOne({
+      where: { 
+        id: req.params.id
           }
         })
         .then((user) => res.status(200).json(user))
@@ -168,7 +163,7 @@ exports.login = (req, res, next) => {
         }));
     };
 
-    /* Password modification */
+  //Password modification 
 
 exports.modifyPassword = (req, res, next) => {
   const oldPassword = req.body.oldPassword
@@ -225,7 +220,7 @@ exports.modifyPassword = (req, res, next) => {
     })
 };
 
-/* User's profile modification */
+//User's profile modification 
 
 exports.modifyUser = (req, res, next) => {
 
@@ -285,10 +280,9 @@ exports.modifyUser = (req, res, next) => {
     }));
 };
 
-/* Delete user's profil */
+//Delete user's profil 
 
 exports.deleteUser = (req, res, next) => {
-  console.log("delete")
   const token = req.headers.authorization.split(" ")[1];
   const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
   const isAdmin = decodedToken.isAdmin;

@@ -1,5 +1,7 @@
 const multer = require("multer");
 
+//types of the file
+
 const MIME_TYPES_PROFILE = {
   "image/jpg": "jpg",
   "image/jpeg": "jpg",
@@ -12,7 +14,7 @@ const MIME_TYPES_POST = {
   "image/png": "png",
   "image/gif": "gif",
 };
-
+// Save user's photo to disk in the /images folder
 const storageUsers = multer.diskStorage({
     destination: (req, file, callback) => {
       callback(null, "images/users");
@@ -23,7 +25,7 @@ const storageUsers = multer.diskStorage({
       callback(null, name + Date.now() + "." + extension);
     },
   });
-
+//save post image in the /images folder
   const storagePosts = multer.diskStorage({
     destination: (req, file, callback) => {
       callback(null, "images/posts");
