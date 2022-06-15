@@ -3,9 +3,8 @@
     <section class="container card my-5 py-5">
       <div class="row">
         <article class="col-md-5 d-flex justify-content-center align-items-center">
+          <!-- User avatar -->
           <div>
-
-            <!-- User avatar -->
             <img class="user-avatar rounded-circle mr-2 " alt=" profil avatar"
             v-if="currentUser.avatar != null"
             :src="`http://localhost:3000/images/users/${currentUser.avatar}`"/>
@@ -24,7 +23,7 @@
             aria-label="Modifier image">
               Modifier image
             </button>
-          <!--Choose image input-->
+           <!--Choose image input-->
             <form
             class="collapse fade"
             id="editImage"
@@ -53,12 +52,12 @@
         <!-- USER INFO -->
         <section class="col-md-7 border-start">
           <div class="card-body">
-          <!-- Last name modification -->
+            <!-- Last name modification -->
             <div class="d-flex">
               <h2 class="h6 text-start mb-0 d-flex align-items-center">
                 <strong> Nom </strong>
               </h2>
-          <!--button for last name modification input-->
+              <!--button for last name modification input-->
               <button
               v-if=" currentUser.id === localStorageUserId"
               class="btn rounded-pill p-0 ms-2"
@@ -66,10 +65,10 @@
               role="button"
               aria-label="Edit nom"
               @click="inputLastNameHidden=!inputLastNameHidden">
-             <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit Nom" />
+              <font-awesome-icon class="fa-sm text-black-50" icon="edit" alt="Edit Nom" />
               </button>
             </div>
-          <!--User's last name-->
+            <!--User's last name-->
             <p class="card-text text-start"> {{ currentUser.lastName }} </p>
             <!--Input for last name modification-->
             <form
@@ -264,37 +263,37 @@
               v-model="newPassword"
               required
               v-on:input="checkDataPassword()"/>
-             <p v-if="newPassword == oldPassword" class="errorMsg">
-             Votre nouveau mot de passe ne peut pas être identique à l'ancien !
-             </p>
-             <p id="newPasswordError"></p>
-             </div>
-             <div class="form-group mb-0">
-            <!--Input for new password confirmation-->
-            <label for="newPasswordConfirm">
-            Confirmer votre nouveau mot de passe :</label >
-            <input
-            type="password"
-            name="newPasswordConfirm"
-            id="newPasswordConfirm"
-            class="form-control"
-            minlength="8"
-            v-model="newPasswordConfirm"
-            required
-            v-on:input="checkDataPassword()"/>
-            <p v-if="newPasswordConfirm != newPassword" class="errorMsg">
-            Merci d'entrer un mot de passe identique !
-           </p>
+              <p v-if="newPassword == oldPassword" class="errorMsg">
+              Votre nouveau mot de passe ne peut pas être identique à l'ancien !
+              </p>
+              <p id="newPasswordError"></p>
+              </div>
+              <div class="form-group mb-0">
+                <!--Input for new password confirmation-->
+              <label for="newPasswordConfirm">
+                Confirmer votre nouveau mot de passe :</label >
+              <input
+                type="password"
+                name="newPasswordConfirm"
+                id="newPasswordConfirm"
+                class="form-control"
+                minlength="8"
+                v-model="newPasswordConfirm"
+                required
+                v-on:input="checkDataPassword()"/>
+                 <p v-if="newPasswordConfirm != newPassword" class="errorMsg">
+                   Merci d'entrer un mot de passe identique !
+                 </p>
+               </div>
+                <!--Password modification button-->
+               <button class="btn btn-dark d-flex rounded-pill" @click.prevent="changePassword()">
+               Valider
+              </button>
+            </form>
            </div>
-          <!--Password modification button-->
-            <button class="btn btn-dark d-flex rounded-pill" @click.prevent="changePassword()">
-            Valider
-           </button>
-         </form>
-        </div>
+          </div>
+        </section>
       </div>
-    </section>
-  </div>
 
     <button
       v-if="localStorageIsAdmin === true || currentUser.id === localStorageUserId"

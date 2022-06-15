@@ -3,9 +3,9 @@
     <section class="mx-lg-5 pb-4" >
      <!-- Posts feed -->
       <article
-      v-for="(post, index) in allPosts"
-      v-bind:key="post.id"
-      class="card mx-auto col-md-7 col-lg-6 border-0 p-0 mb-4 shadow-lg">
+       v-for="(post, index) in allPosts"
+       v-bind:key="post.id"
+       class="card mx-auto col-md-7 col-lg-6 border-0 p-0 mb-4 shadow-lg">
         <div class="card-body">
           <div class="d-flex justify-content-between"> 
 
