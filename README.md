@@ -64,7 +64,7 @@ Un compte admin est présent pour la modération.
 Voici les codes d'accès admin :
 ```
 
-admin@groupomania.com
+admin@groupomania.fr
 
 Admin2022
 ```
